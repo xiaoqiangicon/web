@@ -1,5 +1,7 @@
 import TiAbstractChartType from "../../TiAbstractChartType";
 import baseMethods from "../../common";
+import baseOption from "../../baseOption";
+
 /**
  * Echarts 基础折线图
  * @class TiChartBaseLine
@@ -13,7 +15,7 @@ class TiChartBaseLine extends TiAbstractChartType {
      * private
      * @description 创建Echarts
      */
-    createChart() {
+    createChart(isFirst) {
         let options = {
             tooltip: {
                 trigger: "axis",
@@ -30,13 +32,13 @@ class TiChartBaseLine extends TiAbstractChartType {
             // ],
             series: [
                 {
-                    name: "基础折线图",
+                    name: "基础折线图1",
                     type: "line",
                     data: [10, 20, 30],
                 },
             ],
         };
-        this.initChart(options, "getAxisOption");
+        this.initChart(options, "getAxisOption",isFirst);
     }
     /**
      * @description 改变图表数据
@@ -56,157 +58,33 @@ class TiChartBaseLine extends TiAbstractChartType {
         this.option.config = baseMethods.assiginObj(this.option.config, obj);
         this.createChart();
     }
-    convertStyleData(style){
-      return {
-        color: style.color,
-        xAxis: [
-            {
-                boundaryGap: style.xAxisBoundaryGap,
-                inverse:style.xAxisInverse,
-                axisLine: {
-                    lineStyle: {
-                        color: style.xAxisColor,
-                    },
-                    show: style.showXAxis,
-                },
-                axisLabel: {
-                    color: style.xAxisLabelColor,
-                    fontSize: style.xAxisLabelSize,
-                    show: style.showXAxisLabel,
-                    margin: style.xAxisLabelMargin,
-                },
-                axisTick: {
-                    show: style.showXAxisTick,
-                },
-                name: style.xAxisName,
-                nameGap: style.xAxisNameGap,
-                nameTextStyle: {
-                    color: style.xAxisNameColor,
-                },
-            },
-        ],
-        yAxis: [
-            {
-              boundaryGap: style.yAxisBoundaryGap,
-              inverse:style.yAxisInverse,
-                axisLine: {
-                    lineStyle: {
-                        color: style.yAxisColor,
-                    },
-                    show: style.showYAxis,
-                },
-                axisLabel: {
-                    color: style.yAxisLabelColor,
-                    fontSize: style.yAxisLabelSize,
-                    show: style.showYAxisLabel,
-                    margin: style.yAxisLabelMargin,
-                },
-                axisTick: {
-                    show: style.showYAxisTick,
-                },
-                name: style.yAxisName,
-                nameGap: style.yAxisNameGap,
-                nameTextStyle: {
-                    color: style.yAxisNameColor,
-                },
-            },
-        ],
-        series: [
-            {
-                symbol: style.symbol,
-                smooth: style.smooth,
-                symbolSize: style.symbolSize,
-                showSymbol: style.showSymbol,
+    
+    convertSeriesData(style, optionName) {
+        let option = baseOption[optionName]();
+        let series = option.series.map((item,index) => {
+            return {
+                symbol: this.isUndefined(style.symbol)?style.symbol[index]:item.symbol,
+                smooth: this.isUndefined(style.smooth)?style.smooth[index]:item.smooth,
+                symbolSize: this.isUndefined(style.symbolSize)?style.symbolSize[index]:item.symbolSize,
+                showSymbol: this.isUndefined(style.showSymbol)?style.showSymbol[index]:item.showSymbol,
                 areaStyle: {
-                    color: style.areaStyleColor,
+                    color: this.isUndefined(style.areaStyleColor)?style.areaStyleColor[index]:item.areaStyle.color,
                 },
                 label: {
-                    show: style.showLabel,
-                    position: style.labelPosition,
-                    color: style.labelColor,
-                    fontSize: style.labelSize,
-                    fontWeight: style.labelWeight,
+                    show: this.isUndefined(style.showLabel)?style.showLabel[index]:item.label.show,
+                    position: this.isUndefined(style.labelPosition)?style.labelPosition[index]:item.label.position,
+                    color: this.isUndefined(style.labelColor)?style.labelColor[index]:item.label.color,
+                    fontSize: this.isUndefined(style.labelSize)?style.labelSize[index]:item.label.fontSize,
+                    fontWeight: this.isUndefined(style.labelWeight)?style.labelWeight[index]:item.label.fontWeight,
                 },
-            },
-        ],
-    };
+            };
+        });
+        return series
     }
     changeChartStyle(style) {
-        let convertStyle = {
-            color: style.color,
-            xAxis: [
-                {
-                    boundaryGap: style.xAxisBoundaryGap,
-                    inverse:style.xAxisInverse,
-                    axisLine: {
-                        lineStyle: {
-                            color: style.xAxisColor,
-                        },
-                        show: style.showXAxis,
-                    },
-                    axisLabel: {
-                        color: style.xAxisLabelColor,
-                        fontSize: style.xAxisLabelSize,
-                        show: style.showXAxisLabel,
-                        margin: style.xAxisLabelMargin,
-                    },
-                    axisTick: {
-                        show: style.showXAxisTick,
-                    },
-                    name: style.xAxisName,
-                    nameGap: style.xAxisNameGap,
-                    nameTextStyle: {
-                        color: style.xAxisNameColor,
-                    },
-                },
-            ],
-            yAxis: [
-                {
-                  boundaryGap: style.yAxisBoundaryGap,
-                  inverse:style.yAxisInverse,
-                    axisLine: {
-                        lineStyle: {
-                            color: style.yAxisColor,
-                        },
-                        show: style.showYAxis,
-                    },
-                    axisLabel: {
-                        color: style.yAxisLabelColor,
-                        fontSize: style.yAxisLabelSize,
-                        show: style.showYAxisLabel,
-                        margin: style.yAxisLabelMargin,
-                    },
-                    axisTick: {
-                        show: style.showYAxisTick,
-                    },
-                    name: style.yAxisName,
-                    nameGap: style.yAxisNameGap,
-                    nameTextStyle: {
-                        color: style.yAxisNameColor,
-                    },
-                },
-            ],
-            series: [
-                {
-                    symbol: style.symbol,
-                    smooth: style.smooth,
-                    symbolSize: style.symbolSize,
-                    showSymbol: style.showSymbol,
-                    areaStyle: {
-                        color: style.areaStyleColor,
-                    },
-                    label: {
-                        show: style.showLabel,
-                        position: style.labelPosition,
-                        color: style.labelColor,
-                        fontSize: style.labelSize,
-                        fontWeight: style.labelWeight,
-                    },
-                },
-            ],
-        };
+        let convertStyle = this.convertStyleData(style, "getAxisOption");
         this.option.styleData = baseMethods.assiginObj(this.option.styleData, convertStyle);
-        this.createChart();
+        this.createChart(true);
     }
 }
 export default TiChartBaseLine;

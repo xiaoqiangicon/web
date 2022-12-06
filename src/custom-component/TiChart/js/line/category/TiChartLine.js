@@ -33,5 +33,7 @@ class TiChartLine extends TiAbstractChartCategory {
                 throw new Error("没有这种类型的Echarts图");
         }
     }
+
+    
 }
 export default TiChartLine;

@@ -104,7 +104,7 @@ export function getComponentRotatedStyle(style) {
     return style
 }
 
-const filterKeys = ['width', 'height', 'scale']
+const filterKeys = ['width', 'height', 'scale','backgroundImage']
 export function getCanvasStyle(canvasStyleData) {
     const result = {}
     Object.keys(canvasStyleData).filter(key => !filterKeys.includes(key)).forEach(key => {

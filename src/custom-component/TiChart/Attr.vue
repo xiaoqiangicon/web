@@ -4,173 +4,37 @@
         <el-collapse v-model="activeName" accordion @change="onChange">
             <template v-if="['line', 'bar'].includes(curComponent.category)">
                 <el-collapse-item title="x轴通用样式" name="xStyle">
-                    <el-form>
-                        <el-form-item label="x轴颜色">
-                            <el-color-picker v-model="curComponent.propValue.xAxisColor" show-alpha></el-color-picker>
-                        </el-form-item>
-                        <el-form-item label="轴线">
-                            <el-switch v-model="curComponent.propValue.showXAxis"> </el-switch>
-                        </el-form-item>
-                        <el-form-item label="轴线刻度">
-                            <el-switch v-model="curComponent.propValue.showXAxisTick"> </el-switch>
-                        </el-form-item>
-                        <el-form-item label="留白">
-                            <el-switch v-model="curComponent.propValue.xAxisBoundaryGap"> </el-switch>
-                        </el-form-item>
-                        <el-form-item label="反向">
-                            <el-switch v-model="curComponent.propValue.xAxisInverse"> </el-switch>
-                        </el-form-item>
-
-                        <el-form-item label="标签">
-                            <el-switch v-model="curComponent.propValue.showXAxisLabel"> </el-switch>
-                        </el-form-item>
-                        <el-form-item label="标签颜色">
-                            <el-color-picker
-                                v-model="curComponent.propValue.xAxisLabelColor"
-                                show-alpha
-                            ></el-color-picker>
-                        </el-form-item>
-                        <el-form-item label="标签大小">
-                            <el-input v-model.number="curComponent.propValue.xAxisLabelSize" type="number" />
-                        </el-form-item>
-                        <el-form-item label="标签与轴线之间的距离">
-                            <el-input v-model.number="curComponent.propValue.xAxisLabelMargin" type="number" />
-                        </el-form-item>
-                        <el-form-item label="坐标轴名称">
-                            <el-input v-model="curComponent.propValue.xAxisName" />
-                        </el-form-item>
-                        <el-form-item label="坐标轴名称颜色">
-                            <el-color-picker
-                                v-model="curComponent.propValue.xAxisNameColor"
-                                show-alpha
-                            ></el-color-picker>
-                        </el-form-item>
-                        <el-form-item label="坐标轴名称与轴线之间的距离">
-                            <el-input v-model.number="curComponent.propValue.xAxisNameGap" type="number" />
-                        </el-form-item>
-
-                        <!-- <el-form-item label="x轴线宽">
-                <el-input v-model.number="curComponent.propValue.xAxisWidth" type="number" />
-            </el-form-item>
-            <el-form-item label="y轴颜色">
-                <el-color-picker v-model="curComponent.propValue.yAxisColor" show-alpha></el-color-picker>
-            </el-form-item> -->
-                    </el-form>
+                    <xAxisAtrr></xAxisAtrr>
                 </el-collapse-item>
                 <el-collapse-item title="y轴通用样式" name="yStyle">
-                    <el-form>
-                        <el-form-item label="y轴颜色">
-                            <el-color-picker v-model="curComponent.propValue.yAxisColor" show-alpha></el-color-picker>
-                        </el-form-item>
-                        <el-form-item label="轴线">
-                            <el-switch v-model="curComponent.propValue.showYAxis"> </el-switch>
-                        </el-form-item>
-                        <el-form-item label="轴线刻度">
-                            <el-switch v-model="curComponent.propValue.showYAxisTick"> </el-switch>
-                        </el-form-item>
-                        <el-form-item label="留白">
-                            <el-switch v-model="curComponent.propValue.yAxisBoundaryGap"> </el-switch>
-                        </el-form-item>
-                        <el-form-item label="反向">
-                            <el-switch v-model="curComponent.propValue.yAxisInverse"> </el-switch>
-                        </el-form-item>
-
-                        <el-form-item label="标签">
-                            <el-switch v-model="curComponent.propValue.showYAxisLabel"> </el-switch>
-                        </el-form-item>
-                        <el-form-item label="标签颜色">
-                            <el-color-picker
-                                v-model="curComponent.propValue.yAxisLabelColor"
-                                show-alpha
-                            ></el-color-picker>
-                        </el-form-item>
-                        <el-form-item label="标签大小">
-                            <el-input v-model.number="curComponent.propValue.yAxisLabelSize" type="number" />
-                        </el-form-item>
-                        <el-form-item label="标签与轴线之间的距离">
-                            <el-input v-model.number="curComponent.propValue.yAxisLabelMargin" type="number" />
-                        </el-form-item>
-                        <el-form-item label="坐标轴名称">
-                            <el-input v-model="curComponent.propValue.yAxisName" />
-                        </el-form-item>
-                        <el-form-item label="坐标轴名称颜色">
-                            <el-color-picker
-                                v-model="curComponent.propValue.yAxisNameColor"
-                                show-alpha
-                            ></el-color-picker>
-                        </el-form-item>
-                        <el-form-item label="坐标轴名称与轴线之间的距离">
-                            <el-input v-model.number="curComponent.propValue.yAxisNameGap" type="number" />
-                        </el-form-item>
-
-                        <!-- <el-form-item label="x轴线宽">
-                <el-input v-model.number="curComponent.propValue.xAxisWidth" type="number" />
-            </el-form-item>
-            <el-form-item label="y轴颜色">
-                <el-color-picker v-model="curComponent.propValue.yAxisColor" show-alpha></el-color-picker>
-            </el-form-item> -->
-                    </el-form>
+                    <yAxisAttr></yAxisAttr>
                 </el-collapse-item>
                 <el-collapse-item title="图表内容样式" name="contentStyle">
                     <el-form>
-                        <el-form-item label="颜色">
-                            <el-color-picker v-model="curComponent.propValue.color" show-alpha></el-color-picker>
-                        </el-form-item>
-                        <el-form-item label="标签">
-                            <el-switch v-model="curComponent.propValue.showLabel"> </el-switch>
-                        </el-form-item>
-                        <el-form-item label="标签颜色">
-                            <el-color-picker v-model="curComponent.propValue.labelColor" show-alpha></el-color-picker>
-                        </el-form-item>
-                        <el-form-item label="标签大小">
-                            <el-input v-model.number="curComponent.propValue.labelSize" type="number" />
-                        </el-form-item>
-                        <el-form-item label="标签位置">
-                            <el-select v-model="curComponent.propValue.labelPosition" placeholder="请选择">
-                                <el-option
-                                    v-for="item in [
-                                        {
-                                            label: '上方',
-                                            value: 'top',
-                                        },
-                                        {
-                                            label: '下方',
-                                            value: 'bottom',
-                                        },
-                                    ]"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value"
-                                >
-                                </el-option>
-                            </el-select>
-                        </el-form-item>
-                        <el-form-item label="标签字重">
-                            <el-select v-model="curComponent.propValue.labelWeight" placeholder="请选择">
-                                <el-option
-                                    v-for="item in [
-                                        {
-                                            label: '700',
-                                            value: 700,
-                                        },
-                                        {
-                                            label: '400',
-                                            value: 400,
-                                        },
-                                    ]"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value"
-                                >
-                                </el-option>
-                            </el-select>
+                        <gridAttr></gridAttr>
+                        <legendAttr></legendAttr>
+                        <titleAttr></titleAttr>
+                        <el-form-item label="背景图">
+                            <el-upload
+                                class="avatar-uploader"
+                                action=""
+                                :show-file-list="false"
+                                :before-upload="beforeUpload"
+                            >
+                                <img v-if="curComponent.background" :src="curComponent.background" class="avatar" />
+                                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                            </el-upload>
                         </el-form-item>
                     </el-form>
+                    <lineAttr v-if="curComponent.category === 'line'"></lineAttr>
                 </el-collapse-item>
             </template>
             <template v-if="curComponent.category === 'pie'">
                 <el-collapse-item title="图表内容样式" name="contentStyle">
                     <el-form>
+                        <!-- <gridAttr></gridAttr> -->
+                        <legendAttr></legendAttr>
+                        <titleAttr></titleAttr>
                         <el-form-item label="颜色">
                             <el-select v-model="curComponent.propValue.color" placeholder="请选择">
                                 <el-option
@@ -271,156 +135,34 @@
                                 :max="360"
                             />
                         </el-form-item>
+                        <el-form-item label="中心">
+                            <el-input
+                                v-model.number="curComponent.propValue.pieCenter[0]"
+                                type="number"
+                                :min="0"
+                                :max="360"
+                            />
+                            <el-input
+                                v-model.number="curComponent.propValue.pieCenter[1]"
+                                type="number"
+                                :min="0"
+                                :max="360"
+                            />
+                        </el-form-item>
                     </el-form>
                 </el-collapse-item>
             </template>
-            <el-collapse-item v-if="curComponent.category === 'line'" title="折线图样式" name="lineStyle">
-                <el-form v-if="curComponent.type === 'baseLine'">
-                    <el-form-item label="曲线平滑">
-                        <el-switch v-model="curComponent.propValue.smooth"> </el-switch>
-                    </el-form-item>
-                    <el-form-item label="symbol">
-                        <el-switch v-model="curComponent.propValue.showSymbol"> </el-switch>
-                    </el-form-item>
-                    <template v-if="curComponent.propValue.showSymbol">
-                        <el-form-item label="symbol类型">
-                            <el-select v-model="curComponent.propValue.symbol" placeholder="请选择">
-                                <el-option
-                                    v-for="item in [
-                                        {
-                                            label: 'emptyCircle',
-                                            value: 'emptyCircle',
-                                        },
-                                        {
-                                            label: 'circle',
-                                            value: 'circle',
-                                        },
-                                        {
-                                            label: 'rect',
-                                            value: 'rect',
-                                        },
-                                        {
-                                            label: 'roundRect',
-                                            value: 'roundRect',
-                                        },
-                                        {
-                                            label: 'triangle',
-                                            value: 'triangle',
-                                        },
-                                        {
-                                            label: 'diamond',
-                                            value: 'diamond',
-                                        },
-                                        {
-                                            label: 'pin',
-                                            value: 'pin',
-                                        },
-                                        {
-                                            label: 'arrow',
-                                            value: 'arrow',
-                                        },
-                                        {
-                                            label: 'none',
-                                            value: 'none',
-                                        },
-                                    ]"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value"
-                                >
-                                </el-option>
-                            </el-select>
-                        </el-form-item>
-                        <el-form-item label="symbol大小">
-                            <el-input v-model.number="curComponent.propValue.symbolSize" type="number" />
-                        </el-form-item>
-                    </template>
-                    <el-form-item label="区域颜色">
-                        <el-color-picker v-model="curComponent.propValue.areaStyleColor" show-alpha></el-color-picker>
-                    </el-form-item>
-                </el-form>
-                <el-form v-if="curComponent.type === 'doubleLine' ||curComponent.type === 'sixLine'" >
-                    <template v-for="(item, index) in curComponent.propValue.length">
-                        <el-form-item label="曲线平滑">
-                            <el-switch v-model="curComponent.propValue.smooth[item - 1]"> </el-switch>
-                        </el-form-item>
-                    </template>
-                    <template v-for="(item, index) in curComponent.propValue.length">
-                        <el-form-item label="symbol">
-                            <el-switch v-model="curComponent.propValue.showSymbol[item - 1]"> </el-switch>
-                        </el-form-item>
-                    </template>
 
-                    <div v-for="(item, index) in curComponent.propValue.length">
-                        <div v-if="curComponent.propValue.showSymbol[item - 1]">
-                            <el-form-item label="symbol类型">
-                                <el-select v-model="curComponent.propValue.symbol[item - 1]" placeholder="请选择">
-                                    <el-option
-                                        v-for="item in [
-                                            {
-                                                label: 'emptyCircle',
-                                                value: 'emptyCircle',
-                                            },
-                                            {
-                                                label: 'circle',
-                                                value: 'circle',
-                                            },
-                                            {
-                                                label: 'rect',
-                                                value: 'rect',
-                                            },
-                                            {
-                                                label: 'roundRect',
-                                                value: 'roundRect',
-                                            },
-                                            {
-                                                label: 'triangle',
-                                                value: 'triangle',
-                                            },
-                                            {
-                                                label: 'diamond',
-                                                value: 'diamond',
-                                            },
-                                            {
-                                                label: 'pin',
-                                                value: 'pin',
-                                            },
-                                            {
-                                                label: 'arrow',
-                                                value: 'arrow',
-                                            },
-                                            {
-                                                label: 'none',
-                                                value: 'none',
-                                            },
-                                        ]"
-                                        :key="item.value"
-                                        :label="item.label"
-                                        :value="item.value"
-                                    >
-                                    </el-option>
-                                </el-select>
-                            </el-form-item>
-                            <el-form-item label="symbol大小">
-                                <el-input v-model.number="curComponent.propValue.symbolSize[item - 1]" type="number" />
-                            </el-form-item>
-                        </div>
-                    </div>
-
-                    <el-form-item v-for="(item, index) in curComponent.propValue.length" label="区域颜色" :key="index">
-                        <el-color-picker
-                            v-model="curComponent.propValue.areaStyleColor[item - 1]"
-                            show-alpha
-                        ></el-color-picker>
-                    </el-form-item>
-                </el-form>
-            </el-collapse-item>
             <el-collapse-item v-if="curComponent.category === 'bar'" title="柱状图样式" name="barStyle">
-                <el-form v-if="['baseBar','doubleBar','sixBar'].includes(curComponent.type)">
+                <el-form v-if="['baseBar', 'doubleBar', 'sixBar'].includes(curComponent.type)">
                     <el-form-item label="border边框" v-for="item in curComponent.propValue.borderRadius.length">
-                        <template v-for="itm in curComponent.propValue.borderRadius[item-1].length">
-                            {{positionList[itm-1]}}
-                        <el-input v-model.number="curComponent.propValue.borderRadius[item-1][itm-1]" type="number" :min="0" />
+                        <template v-for="itm in curComponent.propValue.borderRadius[item - 1].length">
+                            {{ positionList[itm - 1] }}
+                            <el-input
+                                v-model.number="curComponent.propValue.borderRadius[item - 1][itm - 1]"
+                                type="number"
+                                :min="0"
+                            />
                         </template>
                     </el-form-item>
                 </el-form>
@@ -431,9 +173,27 @@
 
 <script>
 import CommonAttr from "@/custom-component/common/CommonAttr.vue";
-
+import lineAttr from "./lineAttr.vue";
+//网格属性
+import gridAttr from "./gridAttr.vue";
+//图例属性
+import legendAttr from "./legendAttr.vue";
+//标题属性
+import titleAttr from "./titleAttr.vue";
+//x轴属性
+import xAxisAtrr from "./xAxisAttr.vue";
+//y轴属性
+import yAxisAttr from "./yAxisAttr.vue";
 export default {
-    components: { CommonAttr },
+    components: {
+        CommonAttr,
+        lineAttr,
+        gridAttr,
+        legendAttr,
+        titleAttr,
+        xAxisAtrr,
+        yAxisAttr,
+    },
     computed: {
         curComponent() {
             return this.$store.state.curComponent;
@@ -441,12 +201,27 @@ export default {
     },
     data() {
         return {
-            positionList:["上","右","下","左"],
+            positionList: ["上", "右", "下", "左"],
             activeName: "xStyle",
+            valueActiveName: "attr0",
         };
     },
     methods: {
         onChange() {},
+        async beforeUpload(file) {
+            this.curComponent.background = await this.getBase64(file);
+            return false;
+        },
+        getBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = (e) => {
+                    resolve(reader.result);
+                };
+                reader.onerror = (error) => reject(error);
+            });
+        },
     },
     // watch: {
     //     "curComponent.propValue": {
@@ -458,3 +233,28 @@ export default {
     // },
 };
 </script>
+<style scoped>
+.avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+    border-color: #409eff;
+}
+.avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+}
+.avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+}
+</style>

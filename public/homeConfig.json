@@ -1,0 +1,218 @@
+{
+    "title": "智慧城市可视化",
+    "description": "文字描述",
+    "templateList": [
+        {
+            "img": "data.png",
+            "title": "城市",
+            "href": "https://www.baidu.com"
+        },
+        {
+            "img": "application.png",
+            "title": "工厂",
+            "href": "https://www.bilibili.com"
+        },
+        {
+            "img": "component.png",
+            "title": "交通",
+            "href": "https://www.baidu.com"
+        }
+    ],
+    "caseList": [
+        {
+            "title": "工业",
+            "active": true,
+            "swiperList": [
+                [
+                    {
+                        "img": "blue.png",
+                        "title": "产融平台",
+                        "href": "https://www.baidu.com",
+                        "des": "2022年江西省智研院自主研发的产业金融服务平台11111111111111111111111111111111111"
+                    },
+                    {
+                        "img": "water.png",
+                        "title": "江西水利态势分析",
+                        "href": "https://www.bilibili.com",
+                        "des": "2022年江西省智研院自主研发的产业金融服务平台"
+                    },
+                    {
+                        "img": "fly.png",
+                        "title": "航空战场态势分析",
+                        "href": "https://www.baidu.com",
+                        "des": "2022年江西省智研院自主研发的产业金融服务平台"
+                    },
+                    {
+                        "img": "space.png",
+                        "title": "空间站态势分析",
+                        "href": "https://www.baidu.com",
+                        "des": "2022年江西省智研院自主研发的产业金融服务平台"
+                    },
+                    {
+                        "img": "blue.png",
+                        "title": "产融平台",
+                        "href": "https://www.baidu.com",
+                        "des": "2022年江西省智研院自主研发的产业金融服务平台11111111111111111111111111111111111"
+                    },
+                    {
+                        "img": "water.png",
+                        "title": "江西水利态势分析",
+                        "href": "https://www.bilibili.com",
+                        "des": "2022年江西省智研院自主研发的产业金融服务平台"
+                    },
+                    {
+                        "img": "fly.png",
+                        "title": "航空战场态势分析",
+                        "href": "https://www.baidu.com",
+                        "des": "2022年江西省智研院自主研发的产业金融服务平台"
+                    },
+                    {
+                        "img": "space.png",
+                        "title": "空间站态势分析",
+                        "href": "https://www.baidu.com",
+                        "des": "2022年江西省智研院自主研发的产业金融服务平台"
+                    }
+                ],
+                [
+                    {
+                        "img": "大.jpg",
+                        "title": "产融平台",
+                        "href": "https://www.baidu.com",
+                        "des": "2022年江西省智研院自主研发的产业金融服务平台11111111111111111111111111111111111"
+                    },
+                    {
+                        "img": "water.png",
+                        "title": "江西水利态势分析",
+                        "href": "https://www.bilibili.com",
+                        "des": "2022年江西省智研院自主研发的产业金融服务平台"
+                    },
+                    {
+                        "img": "fly.png",
+                        "title": "航空战场态势分析",
+                        "href": "https://www.baidu.com",
+                        "des": "2022年江西省智研院自主研发的产业金融服务平台"
+                    },
+                    {
+                        "img": "fly.png",
+                        "title": "航空战场态势分析",
+                        "href": "https://www.baidu.com",
+                        "des": "2022年江西省智研院自主研发的产业金融服务平台"
+                    }
+                ]
+            ]
+        },
+        {
+            "title": "机器视觉",
+            "active": false,
+            "swiperList": [
+                [
+                    {
+                        "img": "qrcode.jpg",
+                        "title": "城市",
+                        "href": "https://www.baidu.com",
+                        "des": "2022年江西省智研院自主研发的产业金融服务平台11111111111111111111111111111111111"
+                    },
+                    {
+                        "img": "application.png",
+                        "title": "工厂",
+                        "href": "https://www.bilibili.com",
+                        "des": "2022年江西省智研院自主研发的产业金融服务平台"
+                    }
+                ]
+            ]
+        },
+        {
+            "title": "智慧园区",
+            "active": false,
+            "swiperList": []
+        },
+        {
+            "title": "智慧城市",
+            "active": false,
+            "swiperList": []
+        }
+    ],
+    "contactList": [
+        {
+            "title": "站内导航",
+            "list": [
+                {
+                    "title": "行业模板",
+                    "href": "trade-template"
+                },
+                {
+                    "title": "案例展示",
+                    "href": "case-show"
+                }
+            ]
+        },
+        {
+            "title": "主营业务",
+            "list": [
+                {
+                    "title": "智能机器人",
+                    "href": ""
+                },
+                {
+                    "title": "工业互联网",
+                    "href": ""
+                },
+                {
+                    "title": "人工智能",
+                    "href": ""
+                },
+                {
+                    "title": "智能制造",
+                    "href": ""
+                }
+            ]
+        },
+        {
+            "title": "产品类别",
+            "list": [
+                {
+                    "title": "复合式机器人",
+                    "href": ""
+                },
+                {
+                    "title": "数据中台",
+                    "href": ""
+                },
+                {
+                    "title": "WMS",
+                    "href": ""
+                },
+                {
+                    "title": "OnlineEarth",
+                    "href": ""
+                }
+            ]
+        },
+        {
+            "title": "关于我们",
+            "list": [
+                {
+                    "title": "公司官网 ",
+                    "href": ""
+                },
+                {
+                    "title": "产品介绍",
+                    "href": ""
+                }
+            ]
+        },
+        {
+            "title": "联系我们",
+            "list": [
+                {
+                    "title": "040-6232153",
+                    "href": ""
+                },
+                {
+                    "title": "江西省南昌县小蓝经济开发区小兰中大道346号",
+                    "href": ""
+                }
+            ]
+        }
+    ]
+}

@@ -10,7 +10,7 @@ import '@/styles/animate.scss'
 import 'element-ui/lib/theme-chalk/index.css'
 import '@/styles/reset.css'
 import '@/styles/global.scss'
-
+import 'swiper/swiper-bundle.css'
 import "echarts-gl"
 Vue.prototype.$axios = axios
 Vue.use(ElementUI, { size: 'small' })

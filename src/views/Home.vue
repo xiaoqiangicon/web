@@ -6,10 +6,10 @@
             <!-- 左侧组件列表 -->
             <section class="left">
                 <ComponentList />
-                <RealTimeComponentList />
+                
             </section>
             <!-- 中间画布 -->
-            <section class="center">
+            <section class="center" >
                 <div
                     class="content"
                     @drop="handleDrop"
@@ -17,12 +17,12 @@
                     @mousedown="handleMouseDown"
                     @mouseup="deselectCurComponent"
                 >
-                    <Editor ref="editor" />
+                    <Editor ref="editor"  />
                 </div>
             </section>
             <!-- 右侧属性列表 -->
             <section class="right">
-                <el-tabs v-if="curComponent" v-model="activeName">
+                <el-tabs v-if="curComponent" v-model="activeName" style="height: 600px;">
                     <el-tab-pane label="属性" name="attr">
                         <component :is="curComponent.component + 'Attr'" />
                     </el-tab-pane>
@@ -34,8 +34,9 @@
                     </el-tab-pane>
                 </el-tabs>
                 <CanvasAttr v-else></CanvasAttr>
+                <RealTimeComponentList />
             </section>
-            <div style="position: absolute; left: 200px; bottom: 0">X{{ position[0] }} Y{{ position[1] }}</div>
+            <div v-if="(position[0]!==0&&position[1]!==0)" style="position: absolute; left: 400px; bottom: 20px;color: rgb(168, 168, 168);font-size: 14px;">位置 <span style="margin: 0 10px;">X:{{ position[0] }}px</span> <span>Y:{{ position[1] }}px</span> </div>
         </main>
     </div>
 </template>
@@ -77,6 +78,8 @@ export default {
     },
     computed: mapState(["componentData", "curComponent", "isClickComponent", "canvasStyleData", "editor"]),
     created() {
+        // console.log(process.env)
+        // this.$router.push('/page')
         this.restore();
         // 全局监听按键事件
         listenGlobalKeyDown();
@@ -95,6 +98,7 @@ export default {
         }
     },
     methods: {
+       
         hideCanvasSizeSelect(e) {
             if (e.target.className !== "el-icon-arrow-down") this.$refs.toolBar.$data.cavansSizeSelectState = false;
         },
@@ -118,9 +122,10 @@ export default {
             e.stopPropagation();
             const index = e.dataTransfer.getData("index").split(",")[0];
             const idx = e.dataTransfer.getData("index").split(",")[1];
+            const ix = e.dataTransfer.getData("index").split(",")[2];
             const rectInfo = this.editor.getBoundingClientRect();
             if (index) {
-                const component = deepCopy(componentList[index].children[idx]);
+                const component = deepCopy(componentList[index].children[idx].children[ix]);
                 // component.style.top = e.clientY - rectInfo.y
                 // component.style.left = e.clientX - rectInfo.x
                 component.style.top = this.boundaryLimit(
@@ -176,10 +181,9 @@ export default {
         .left {
             position: absolute;
             height: 100%;
-            width: 200px;
+            width: 380px;
             left: 0;
             top: 0;
-
             & > div {
                 // overflow: auto;
 
@@ -202,12 +206,16 @@ export default {
         }
 
         .center {
-            margin-left: 200px;
+            margin-left: 380px;
             margin-right: 288px;
             background: #f5f5f5;
             height: 100%;
             overflow: auto;
             padding: 20px;
+            padding-left: 200px;
+            padding-right: 200px;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
 
             .content {
                 width: 100%;

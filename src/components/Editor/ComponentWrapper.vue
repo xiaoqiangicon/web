@@ -20,6 +20,7 @@
             :styleData="config.propValue"
             :category="config.category"
             :type="config.type"
+            :background="config.background"
             :element="config"
             :request="config.request"
             :linkage="config.linkage"

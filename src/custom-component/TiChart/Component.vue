@@ -1,5 +1,7 @@
 <template>
-    <div style="height: 100%" ref="chart"></div>
+    <div :style="{backgroundImage:'url('+background+')',backgroundRepeat:'no-repeat',backgroundSize:'100% 100%'}">
+        <div style="height: 100%" ref="chart"></div>
+    </div>
 </template>
 
 <script>
@@ -37,9 +39,13 @@ export default {
             type: Array,
             default: () => [],
         },
-        styleData:{
+        styleData: {
             type: Object,
-            default: () => {}
+            default: () => {},
+        },
+        background:{
+            type:String,
+            default:''
         }
     },
     watch: {
@@ -66,7 +72,7 @@ export default {
         this.initChart();
     },
     methods: {
-        changeChartStyle(style){
+        changeChartStyle(style) {
             this.chartObject.changeChartStyle(style);
         },
         changeChartData(data) {
@@ -83,10 +89,10 @@ export default {
                     eventListener: this.eventListener,
                     chartId: this.chartId,
                     chartData: this.chartData,
-                    styleData:{
-                    //     // color:'#fff'
-                    }
-                    // styleData:this.styleData
+                    // styleData:{
+                    // //     // color:'#fff'
+                    // }
+                    styleData: this.styleData,
                 });
         },
     },
@@ -96,4 +102,4 @@ export default {
 };
 </script>
 
-<style ></style>
+<style></style>
