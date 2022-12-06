@@ -9,6 +9,9 @@
                     ...getCanvasStyle(canvasStyleData),
                     width: changeStyleWithScale(canvasStyleData.width) + 'px',
                     height: changeStyleWithScale(canvasStyleData.height) + 'px',
+                    backgroundImage: 'url(' + getBg(canvasStyleData.backgroundImage) + ')',
+            backgroundSize: '100% 100%',
+            backgroundRepeat: 'no-repeat',
                 }"
             >
                 <ComponentWrapper
@@ -53,7 +56,9 @@ export default {
         getStyle,
         getCanvasStyle,
         changeStyleWithScale,
-
+        getBg(item){
+           return  require(`../../assets/${item}.jpg`)
+        },
         close() {
             this.$emit('close')
         },

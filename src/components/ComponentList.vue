@@ -38,7 +38,7 @@
                     placeholder="请输入"
                     v-model="inputValue"
                 >
-                    <i slot="suffix" class="el-input__icon el-icon-search"></i>
+                    <i slot="suffix" class="el-input__icon el-icon-search" @click="searchCom"></i>
                 </el-input>
             </div>
 
@@ -66,15 +66,22 @@
                             <span class="iconfont" :class="'icon-' + itm.icon"></span></div
                     ></template>
                     <template v-else>
-                        <div class="compoent-single" v-for="(itm, idx) in item.children" style="display: block">
-                            {{ itm.title }}
-                            <div
-                                v-for="(im,ix) in itm.children"
-                                draggable
-                                @dragstart="handleDragStart"
-                                :data-index="(index + ',' + idx+','+ix)"
-                            >
-                                <span class="iconfont" :class="'icon-' + im.icon"></span>
+                        <div class="compoent-chart-single" v-for="(itm, idx) in item.children"   >
+                            <div class="compoent-chart-single-title">{{ itm.title }}</div>
+                            <div class="chart-warpper">
+                                <div
+                                :style="{ display: realInputValue==='' || im.label.indexOf(realInputValue)!==-1   ? 'block' : 'none' }"
+                                    class="chart-single"
+                                    v-for="(im, ix) in itm.children"
+                                    draggable
+                                    @dragstart="handleDragStart"
+                                    :data-index="index + ',' + idx + ',' + ix"
+                                >
+                                    <div class="component-img"></div>
+                                    {{ im.label }}
+                                    <!-- <span class="iconfont" :class="'icon-' + im.icon"></span> -->
+                                </div>
+                                <!-- <div class="chart-single" v-for="(im, ix) in itm.children.length % 2"></div> -->
                             </div>
                         </div>
                     </template>
@@ -90,7 +97,9 @@ import componentList from "@/custom-component/component-list";
 export default {
     data() {
         return {
+            // componentList: JSON.parse(JSON.stringify(componentList)),
             inputValue: "",
+            realInputValue:'',
             functionList: [
                 {
                     img: require("../assets/img/component.png"),
@@ -120,6 +129,18 @@ export default {
         };
     },
     methods: {
+        searchCom() {
+            this.realInputValue=this.inputValue
+// console.log(this.deepSearch())
+//             this.componentList=this.deepSearch()
+        },
+        // deepSearch(data){
+        //     if (!data) data = componentList;
+        //    return  data.filter((item) => {
+        //         if (item.title.indexOf(this.inputValue)) return item;
+        //         else if (item.children) return this.deepSearch(item.children);
+        //     });
+        // },
         changeFunctionList(idx) {
             this.functionList.forEach((item, index) => {
                 item.active = index === idx;
@@ -167,6 +188,7 @@ export default {
     width: 380px;
     background: #fff;
     .list-detail {
+        width: 300px;
         .list-detail-title {
             width: 300px;
             height: 60px;
@@ -225,10 +247,44 @@ export default {
                 text-align: center;
                 margin-bottom: 20px;
             }
+            .compoent-chart-single {
+                .compoent-chart-single-title {
+                    font-weight: 500;
+                    font-size: 18px;
+                    padding-left: 10px;
+                    // margin: 10px 0;
+                    padding-top: 10px;
+                }
+                .chart-warpper {
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: space-between;
+                    padding-left: 10px;
+                    padding-right: 10px;
+                    //                     &::after {
+                    //     content: '';
+                    //     // flex: auto;    /* 或者flex: 1 */
+                    //     flex: 1;
+                    // }
+                    .chart-single {
+                        width: 48%;
+                        background: red;
+                        margin-top: 10px;
+                        text-align: center;
+                        .component-img {
+                            width: 80px;
+                            height: 55px;
+                            background-repeat: no-repeat;
+                            background-size: 100% 100%;
+                        }
+                    }
+                }
+            }
         }
         .height-add {
-            height: 300px;
-            animation: heightAdd 1s;
+            // height: 300px;
+            height: auto;
+            // animation: heightAdd 1s;
         }
         @keyframes heightAdd {
             from {

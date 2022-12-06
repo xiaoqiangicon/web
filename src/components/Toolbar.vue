@@ -47,7 +47,7 @@
             </div>
             <div style="display: flex; align-items: center; margin-left: 70px">
                 背景色
-                <el-color-picker v-model="canvasStyleData['backgroundColor']" show-alpha></el-color-picker>
+                <el-color-picker v-model="canvasStyleData['backgroundColor']" show-alpha style="margin-left: 10px;"></el-color-picker>
             </div>
             <el-select
                 style="width: 100px; margin-left: 40px"
@@ -69,9 +69,9 @@
             </el-select>
             <!-- 画布大小 -->
             <div class="canvas-config" style="margin-left: 40px">
-                <el-input style="width: 70px" v-model="canvasStyleData.width" />px
-                <span>* </span>
-                <el-input style="width: 70px" v-model="canvasStyleData.height" />px
+                <el-input style="width: 70px;margin-right: 5px;" v-model="canvasStyleData.width" />px
+                <span style="margin: 0 5px;" >* </span>
+                <el-input style="width: 70px;margin-right: 5px;" v-model="canvasStyleData.height" />px
             </div>
             <i class="el-icon-arrow-down" @click="showCavansSizeSelect"></i>
             <div
@@ -86,7 +86,7 @@
             </div>
             <!-- 画布比例 -->
             <div>
-                <el-input style="width: 80px; margin-left: 40px" v-model.number="scale" @input="handleScaleChange" />%
+                <el-input style="width: 80px; margin-left: 40px;margin-right: 5px;" v-model.number="scale" @input="handleScaleChange" />%
             </div>
             <div class="preview" @click="preview(false)">
                 <div class="preview-img"></div>
@@ -447,7 +447,7 @@ export default {
 .toolbar {
     display: flex;
     box-sizing: border-box;
-    padding: 20px 15px;
+    padding: 19px 15px;
     white-space: nowrap;
     overflow-x: auto;
     background: #fff;
@@ -535,7 +535,7 @@ export default {
     }
     .size-select {
         position: absolute;
-        left: 1320px;
+        left: 1318px;
         top: 55px;
         z-index: 9;
         border: 1px solid #ccc;
@@ -543,7 +543,7 @@ export default {
         background: rgb(252, 252, 252);
         .size-select-single {
             height: 40px;
-            width: 200px;
+            width: 215px;
             display: flex;
             justify-content: center;
             align-items: center;

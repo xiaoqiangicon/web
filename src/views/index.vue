@@ -139,7 +139,7 @@ export default {
                                 img: require("../assets/img/home/" + im.img),
                                 title: im.title,
                                 href: im.href,
-                                des: itm.des,
+                                des: im.des,
                             };
                         });
                     }),

@@ -1,5 +1,6 @@
 <template>
-    <div class="real-time-component-list">
+    <div class="real-time-component-list" v-if="(componentData.length!==0)">
+        <div class="real-time-component-title">组件列表</div>
         <div
             v-for="(item, index) in componentData"
             :key="index"
@@ -7,7 +8,8 @@
             :class="{ actived: transformIndex(index) === curComponentIndex }"
             @click="onClick(transformIndex(index))"
         >
-            <span class="iconfont" :class="'icon-' + getComponent(index).icon"></span>
+        <span class="real-time-component-img"></span>
+            <!-- <span class="iconfont" :class="'icon-' + getComponent(index).icon"></span> -->
             <span>{{ getComponent(index).label }}</span>
             <div class="icon-container">
                 <span class="iconfont icon-shangyi" @click="upComponent(transformIndex(index))"></span>
@@ -71,19 +73,37 @@ export default {
 <style lang="scss" scoped>
 .real-time-component-list {
     height: 35%;
-
+.real-time-component-title{
+    color: rgb(51, 51, 51);
+    height: 60px;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 60px;
+    border-bottom: 1px solid rgb(179, 179, 179);
+    border-top: 1px solid rgb(179, 179, 179);
+    padding-left: 10px;
+}
     .list {
-        height: 30px;
+        height: 55px;
         cursor: grab;
         text-align: center;
         color: #333;
         display: flex;
         align-items: center;
-        font-size: 12px;
+        font-size: 16px;
         padding: 0 10px;
         position: relative;
         user-select: none;
-
+        border-bottom: 1px solid rgb(179, 179, 179);
+        .real-time-component-img{
+            display: inline-block;
+            height: 37px;
+            width: 37px;
+            background: red;
+            margin-right: 14px;
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
         &:active {
             cursor: grabbing;
         }
@@ -91,16 +111,18 @@ export default {
         &:hover {
             background-color: rgba(200, 200, 200, .2);
 
-            .icon-container {
-                display: block;
-            }
+            // .icon-container {
+            //     display: block;
+            // }
         }
 
         .iconfont {
-            margin-right: 4px;
-            font-size: 16px;
+            margin-right: 10px;
+            font-size: 20px;
         }
-
+        .icon-shanchu{
+            color: rgb(255, 120, 120);
+        }
         .icon-wenben,
         .icon-tupian {
             font-size: 14px;
@@ -109,7 +131,7 @@ export default {
         .icon-container {
             position: absolute;
             right: 10px;
-            display: none;
+            // display: none;
 
             .iconfont {
                 cursor: pointer;
