@@ -1,21 +1,21 @@
 {
-    "title": "智慧城市可视化",
-    "description": "文字描述",
+    "title": "智慧城市",
+    "description": "基于地理信息系统，将各领域管理要素进行精准复现，并对业务领域数据指标进行多维度可视分析，实现从全域视角到微观领域，辅助管理者全面掌控城市态势，包括应急指挥、城市管理、智能交通、基础设施等领域进行管理决策支持，进而实现城市智慧式管理和运行。",
     "templateList": [
         {
-            "img": "data.png",
-            "title": "城市",
-            "href": "https://www.baidu.com"
+            "img": "智慧城市.png",
+            "title": "智慧城市",
+            "href": "http://192.168.8.191:90/IndustryData"
         },
         {
-            "img": "application.png",
-            "title": "工厂",
-            "href": "https://www.bilibili.com"
+            "img": "智慧园区.jpg",
+            "title": "智慧园区",
+            "href": "http://192.168.8.191:90/IndustryData"
         },
         {
-            "img": "component.png",
-            "title": "交通",
-            "href": "https://www.baidu.com"
+            "img": "智慧交通.png",
+            "title": "智慧交通",
+            "href": "http://192.168.8.191:90/IndustryData"
         }
     ],
     "caseList": [
@@ -27,49 +27,49 @@
                     {
                         "img": "blue.png",
                         "title": "产融平台",
-                        "href": "https://www.baidu.com",
-                        "des": "2022年江西省智研院自主研发的产业金融服务平台11111111111111111111111111111111111"
+                        "href": "http://192.168.8.191:90/IndustryData",
+                        "des": "针对小蓝经开区所有企业建立全面的企业画像，建立相关指标体系，建立模型对企业进行评级和成长性分析。为数字治理提供大数据基础、基于不同发展阶段的政策与金融工具组合建议。通过数据的平台化、关联度和聚合力共同作用，改变“靠人管理、靠人监督、靠人执行”的传统行政模式。通过本平台项目的应用，将变人为监督为数据监督，变被动监督为主动监督"
                     },
                     {
                         "img": "water.png",
                         "title": "江西水利态势分析",
-                        "href": "https://www.bilibili.com",
+                        "href": "http://192.168.8.191:90/IndustryData",
                         "des": "2022年江西省智研院自主研发的产业金融服务平台"
                     },
                     {
                         "img": "fly.png",
                         "title": "航空战场态势分析",
-                        "href": "https://www.baidu.com",
+                        "href": "http://192.168.8.191:90/IndustryData",
                         "des": "2022年江西省智研院自主研发的产业金融服务平台"
                     },
                     {
                         "img": "space.png",
                         "title": "空间站态势分析",
-                        "href": "https://www.baidu.com",
+                        "href": "http://192.168.8.191:90/IndustryData",
                         "des": "2022年江西省智研院自主研发的产业金融服务平台"
                     },
                     {
                         "img": "blue.png",
                         "title": "产融平台",
-                        "href": "https://www.baidu.com",
-                        "des": "2022年江西省智研院自主研发的产业金融服务平台11111111111111111111111111111111111"
+                        "href": "http://192.168.8.191:90/IndustryData",
+                        "des": "2022年江西省智研院自主研发的产业金融服务平台"
                     },
                     {
                         "img": "water.png",
                         "title": "江西水利态势分析",
-                        "href": "https://www.bilibili.com",
+                        "href": "http://192.168.8.191:90/IndustryData",
                         "des": "2022年江西省智研院自主研发的产业金融服务平台"
                     },
                     {
                         "img": "fly.png",
                         "title": "航空战场态势分析",
-                        "href": "https://www.baidu.com",
+                        "href": "http://192.168.8.191:90/IndustryData",
                         "des": "2022年江西省智研院自主研发的产业金融服务平台"
                     },
                     {
                         "img": "space.png",
                         "title": "空间站态势分析",
-                        "href": "https://www.baidu.com",
+                        "href": "http://192.168.8.191:90/IndustryData",
                         "des": "2022年江西省智研院自主研发的产业金融服务平台"
                     }
                 ],
@@ -77,25 +77,25 @@
                     {
                         "img": "大.jpg",
                         "title": "产融平台",
-                        "href": "https://www.baidu.com",
-                        "des": "2022年江西省智研院自主研发的产业金融服务平台11111111111111111111111111111111111"
+                        "href": "http://192.168.8.191:90/IndustryData",
+                        "des": "2022年江西省智研院自主研发的产业金融服务平台"
                     },
                     {
                         "img": "water.png",
                         "title": "江西水利态势分析",
-                        "href": "https://www.bilibili.com",
+                        "href": "http://192.168.8.191:90/IndustryData",
                         "des": "2022年江西省智研院自主研发的产业金融服务平台"
                     },
                     {
                         "img": "fly.png",
                         "title": "航空战场态势分析",
-                        "href": "https://www.baidu.com",
+                        "href": "http://192.168.8.191:90/IndustryData",
                         "des": "2022年江西省智研院自主研发的产业金融服务平台"
                     },
                     {
                         "img": "fly.png",
                         "title": "航空战场态势分析",
-                        "href": "https://www.baidu.com",
+                        "href": "http://192.168.8.191:90/IndustryData",
                         "des": "2022年江西省智研院自主研发的产业金融服务平台"
                     }
                 ]
@@ -109,13 +109,13 @@
                     {
                         "img": "qrcode.jpg",
                         "title": "城市",
-                        "href": "https://www.baidu.com",
-                        "des": "2022年江西省智研院自主研发的产业金融服务平台11111111111111111111111111111111111"
+                        "href": "http://192.168.8.191:90/IndustryData",
+                        "des": "2022年江西省智研院自主研发的产业金融服务平台"
                     },
                     {
                         "img": "application.png",
                         "title": "工厂",
-                        "href": "https://www.bilibili.com",
+                        "href": "http://192.168.8.191:90/IndustryData",
                         "des": "2022年江西省智研院自主研发的产业金融服务平台"
                     }
                 ]
@@ -193,7 +193,7 @@
             "list": [
                 {
                     "title": "公司官网 ",
-                    "href": ""
+                    "href": "http://www.jxznyjy.com"
                 },
                 {
                     "title": "产品介绍",
@@ -206,11 +206,11 @@
             "list": [
                 {
                     "title": "040-6232153",
-                    "href": ""
+                    "href": "http://www.jxznyjy.com"
                 },
                 {
-                    "title": "江西省南昌县小蓝经济开发区小兰中大道346号",
-                    "href": ""
+                    "title": "江西省南昌市小蓝经开区小蓝中大道346号尚荣城产业园15栋C-03北一层、二层",
+                    "href": "http://www.jxznyjy.com"
                 }
             ]
         }
