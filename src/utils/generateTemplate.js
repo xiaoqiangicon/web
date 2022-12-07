@@ -8,19 +8,19 @@ function getListMap() {
     return map;
 }
 function getHtml(componentData) {
-    console.log(componentData);
-    axios.post('http://localhost:3000/add',{componentData}).then(res=>{
-      console.log(res)
-      let blob = new Blob([res.data], {
-        type: "application/zip;charset-UTF-8"
-    });
-    let url = window.URL.createObjectURL(blob);
-    const link = document.createElement("a"); // 创建a标签
-    link.href = url;
-    link.download = "index.html"; // 重命名文件
-    link.click();
-    URL.revokeObjectURL(url); // 释放内存
-    })
+    // console.log(componentData);
+    // axios.post('http://localhost:3000/add',{componentData}).then(res=>{
+    //   console.log(res)
+    //   let blob = new Blob([res.data], {
+    //     type: "application/zip;charset-UTF-8"
+    // });
+    // let url = window.URL.createObjectURL(blob);
+    // const link = document.createElement("a"); // 创建a标签
+    // link.href = url;
+    // link.download = "index.html"; // 重命名文件
+    // link.click();
+    // URL.revokeObjectURL(url); // 释放内存
+    // })
     let htmlCode = getElement(makeUpHtml(componentData));
     let cssCode = getCss(makeUpCss(componentData));
     let scriptCode = getScript(makeUpScript(componentData));

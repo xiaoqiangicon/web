@@ -94,6 +94,9 @@ function getInitOption(category, type, optionName) {
             areaStyleColor: option.series.map((item) => {
                 return item.areaStyle.color;
             }),
+            itemStyleColor:option.series.map((item) => {
+                return item.itemStyle.color;
+            }),
             length: option.series.length,
         };
     }
@@ -740,18 +743,18 @@ const list = [
                         icon: "biaoge",
                         background: "",
                         propValue: {
-                            ...getInitOption("line", "baseLine", "getAxisOption"),
+                            ...getInitOption("line", "baseLine", "getBaseLineOption"),
                         },
                         type: "baseLine",
                         category: "line",
                         style: {
-                            width: 600,
-                            height: 200,
-                            fontSize: "",
-                            fontWeight: 400,
-                            textAlign: "center",
-                            color: "",
-                            backgroundColor: "rgba(0,0,0,1)",
+                            width: 450,
+                            height: 190,
+                            // fontSize: "",
+                            // fontWeight: 400,
+                            // textAlign: "center",
+                            // color: "",
+                            backgroundColor: "rgba(9,15,23,1)",
                         },
                     },
                     {
@@ -760,18 +763,18 @@ const list = [
                         icon: "biaoge",
                         background: "",
                         propValue: {
-                            ...getInitOption("line", "doubleLine", "getDoubleOption"),
+                            ...getInitOption("line", "doubleLine", "getDoubleLineOption"),
                         },
                         type: "doubleLine",
                         category: "line",
                         style: {
-                            width: 600,
-                            height: 200,
-                            fontSize: "",
-                            fontWeight: 400,
-                            textAlign: "center",
-                            color: "",
-                            backgroundColor: "rgba(0,0,0,1)",
+                            width: 450,
+                            height: 190,
+                            // fontSize: "",
+                            // fontWeight: 400,
+                            // textAlign: "center",
+                            // color: "",
+                            backgroundColor: "rgba(9,15,23,1)",
                         },
                     },
                     {
@@ -780,18 +783,18 @@ const list = [
                         icon: "biaoge",
                         background: "",
                         propValue: {
-                            ...getInitOption("line", "sixLine", "getSixOption"),
+                            ...getInitOption("line", "sixLine", "getSixLineOption"),
                         },
                         type: "sixLine",
                         category: "line",
                         style: {
-                            width: 600,
-                            height: 200,
-                            fontSize: "",
-                            fontWeight: 400,
-                            textAlign: "center",
-                            color: "",
-                            backgroundColor: "rgba(0,0,0,1)",
+                            width: 450,
+                            height: 190,
+                            // fontSize: "",
+                            // fontWeight: 400,
+                            // textAlign: "center",
+                            // color: "",
+                            backgroundColor: "rgba(9,15,23,1)",
                         },
                     },
                 ],
@@ -1037,14 +1040,15 @@ const list = [
 
 for (let i = 0, len = list.length; i < len; i++) {
     if (list[i].title === "图表") {
-        list[i].children.map((item) => {
-            item.children.forEach((itm) => {
+        list[i].children.forEach((item) => {
+            item.children=item.children.map((itm) => {
                 itm.style = { ...commonStyle, ...itm.style };
+                return {
+                    ...itm,
+                    ...commonAttr,
+                };
             });
-            return {
-                ...item,
-                ...commonAttr,
-            };
+           
         });
     }
     // const item = list[i]

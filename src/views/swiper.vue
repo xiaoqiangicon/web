@@ -85,6 +85,7 @@ export default {
                     img: require("../assets/img/home/" + item.img),
                     title: item.title,
                     href: item.href,
+                    description: item.description,
                 };
             });
             this.swiperList = a;
@@ -96,7 +97,11 @@ export default {
                     slideToClickedSlide: true,
                     slidesPerView: 3,
                     spaceBetween: 10,
-                    autoplay: true,
+                    autoplay: {
+                        delay: 10000,
+                        stopOnLastSlide: false, //如果设置为true，当切换到最后一个slide时停止自动切换
+                        disableOnInteraction: true,
+                    },
                     // cssMode: true,
                     on: {
                         click(e) {

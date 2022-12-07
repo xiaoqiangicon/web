@@ -22,7 +22,7 @@ class TiChartBaseLine extends TiAbstractChartType {
             },
             xAxis: [
                 {
-                    data: ["2018", "2019", "2020"],
+                    data: ["2017","2018", "2019", "2020","2021"],
                 },
             ],
             // yAxis: [
@@ -32,33 +32,37 @@ class TiChartBaseLine extends TiAbstractChartType {
             // ],
             series: [
                 {
-                    name: "基础折线图1",
+                    name: "基础折线图",
                     type: "line",
-                    data: [10, 20, 30],
+                    data: [218, 336, 347,440,364],
+                   
                 },
             ],
         };
-        this.initChart(options, "getAxisOption",isFirst);
+        this.initChart(options, "getBaseLineOption",isFirst);
     }
     /**
      * @description 改变图表数据
      * @param {Object} config 配置
      */
     dynamicChart(data) {
-        let obj = {
-            xAxis: {
+    //    let obj= this.convertChartData(data)
+        // this.option.config = baseMethods.assiginObj(this.option.config, obj);
+        this.option.chartData=data
+        this.createChart();
+    }
+    convertChartData(data){
+        return  {
+            xAxis: [{
                 data: data[0],
-            },
+            }],
             series: [
                 {
                     data: data[1],
                 },
             ],
         };
-        this.option.config = baseMethods.assiginObj(this.option.config, obj);
-        this.createChart();
     }
-    
     convertSeriesData(style, optionName) {
         let option = baseOption[optionName]();
         let series = option.series.map((item,index) => {
@@ -77,12 +81,15 @@ class TiChartBaseLine extends TiAbstractChartType {
                     fontSize: this.isUndefined(style.labelSize)?style.labelSize[index]:item.label.fontSize,
                     fontWeight: this.isUndefined(style.labelWeight)?style.labelWeight[index]:item.label.fontWeight,
                 },
+                itemStyle:{
+                    color: this.isUndefined(style.itemStyleColor)?style.itemStyleColor[index]:item.itemStyle.color,    
+                }
             };
         });
         return series
     }
     changeChartStyle(style) {
-        let convertStyle = this.convertStyleData(style, "getAxisOption");
+        let convertStyle = this.convertStyleData(style, "getBaseLineOption");
         this.option.styleData = baseMethods.assiginObj(this.option.styleData, convertStyle);
         this.createChart(true);
     }

@@ -21,7 +21,7 @@ class TiChartDoubleLine extends TiAbstractChartType {
             },
             xAxis: [
                 {
-                    data: ["2018", "2019", "2020"],
+                    data: ["2017","2018","2019", "2020", "2021"],
                 },
             ],
             // yAxis: [
@@ -33,34 +33,50 @@ class TiChartDoubleLine extends TiAbstractChartType {
                 {
                     name: "基础折线图1",
                     type: "line",
-                    data: [10, 20, 30],
+                    data: [72,19,2, 20, 30],
                 },
                 {
                     name: "基础折线图2",
                     type: "line",
-                    data: [30, 20, 10],
+                    data: [0, 0, 0,0,0],
                 },
             ],
         };
-        this.initChart(options, "getDoubleOption",isFirst);
+        this.initChart(options, "getDoubleLineOption",isFirst);
     }
     /**
      * @description 改变图表数据
      * @param {Object} config 配置
      */
     dynamicChart(data) {
-        let obj = {
-            xAxis: {
+        // let obj = {
+        //     xAxis: {
+        //         data: data[0],
+        //     },
+        //     series: [
+        //         {
+        //             data: data[1],
+        //         },
+        //     ],
+        // };
+        // this.option.config = baseMethods.assiginObj(this.option.config, obj);
+        this.option.chartData=data
+        this.createChart();
+    }
+    convertChartData(data){
+        return  {
+            xAxis: [{
                 data: data[0],
-            },
+            }],
             series: [
                 {
-                    data: data[1],
+                    data: data[1][0],
                 },
+                {
+                    data: data[1][1],
+                }
             ],
         };
-        this.option.config = baseMethods.assiginObj(this.option.config, obj);
-        this.createChart();
     }
     convertSeriesData(style, optionName) {
         let option = baseOption[optionName]();
@@ -80,12 +96,15 @@ class TiChartDoubleLine extends TiAbstractChartType {
                     fontSize: this.isUndefined(style.labelSize)?style.labelSize[index]:item.label.fontSize,
                     fontWeight: this.isUndefined(style.labelWeight)?style.labelWeight[index]:item.label.fontWeight,
                 },
+                itemStyle:{
+                    color: this.isUndefined(style.itemStyleColor)?style.itemStyleColor[index]:item.itemStyle.color,    
+                }
             };
         });
         return series
     }
     changeChartStyle(style) {
-        let convertStyle = this.convertStyleData(style, "getDoubleOption");
+        let convertStyle = this.convertStyleData(style, "getDoubleLineOption");
         this.option.styleData = baseMethods.assiginObj(this.option.styleData, convertStyle);
         this.createChart(true);
     }

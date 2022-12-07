@@ -21,7 +21,7 @@ class TiChartSixLine extends TiAbstractChartType {
             },
             xAxis: [
                 {
-                    data: ["2018", "2019", "2020"],
+                    data: ["2017","2018","2019", "2020", "2021"],
                 },
             ],
             // yAxis: [
@@ -31,56 +31,84 @@ class TiChartSixLine extends TiAbstractChartType {
             // ],
             series: [
                 {
-                    name: "基础折线图1",
+                    name: "折线图1",
                     type: "line",
-                    data: [10, 20, 30],
+                    data: [10, 20, 30,40,50],
                 },
                 {
-                    name: "基础折线图2",
+                    name: "折线图2",
                     type: "line",
-                    data: [30, 20, 10],
+                    data: [20, 30, 40,50,60],
                 },
                 {
-                    name: "基础折线图3",
+                    name: "折线图3",
                     type: "line",
-                    data: [60, 50, 40],
+                    data: [30, 40, 50,60,70],
                 },
                 {
-                    name: "基础折线图4",
+                    name: "折线图4",
                     type: "line",
-                    data: [40, 50, 60],
+                    data: [40, 50, 60,70,80],
                 },
                 {
-                    name: "基础折线图5",
+                    name: "折线图5",
                     type: "line",
-                    data: [90, 80, 70],
+                    data: [50, 60, 70,80,90],
                 },
                 {
-                    name: "基础折线图6",
+                    name: "折线图6",
                     type: "line",
-                    data: [70, 80, 90],
+                    data: [60, 70, 80,90,100],
                 },
             ],
         };
-        this.initChart(options, "getSixOption",isFirst);
+        this.initChart(options, "getSixLineOption",isFirst);
     }
     /**
      * @description 改变图表数据
      * @param {Object} config 配置
      */
     dynamicChart(data) {
-        let obj = {
-            xAxis: {
+        // let obj = {
+        //     xAxis: {
+        //         data: data[0],
+        //     },
+        //     series: [
+        //         {
+        //             data: data[1],
+        //         },
+        //     ],
+        // };
+        // this.option.config = baseMethods.assiginObj(this.option.config, obj);
+        this.option.chartData=data
+        this.createChart();
+    }
+    convertChartData(data){
+        return  {
+            xAxis: [{
                 data: data[0],
-            },
+            }],
             series: [
                 {
-                    data: data[1],
+                    data: data[1][0],
                 },
+                {
+                    data: data[1][1],
+                },
+                {
+                    data: data[1][2],
+                },
+                {
+                    data: data[1][3],
+                },
+                {
+                    data: data[1][4],
+                },
+                {
+                    data: data[1][5],
+                }
             ],
         };
-        this.option.config = baseMethods.assiginObj(this.option.config, obj);
-        this.createChart();
     }
     convertSeriesData(style, optionName) {
         let option = baseOption[optionName]();
@@ -100,12 +128,15 @@ class TiChartSixLine extends TiAbstractChartType {
                     fontSize: this.isUndefined(style.labelSize)?style.labelSize[index]:item.label.fontSize,
                     fontWeight: this.isUndefined(style.labelWeight)?style.labelWeight[index]:item.label.fontWeight,
                 },
+                itemStyle:{
+                    color: this.isUndefined(style.itemStyleColor)?style.itemStyleColor[index]:item.itemStyle.color,    
+                }
             };
         });
         return series
     }
     changeChartStyle(style) {
-        let convertStyle = this.convertStyleData(style, "getSixOption");
+        let convertStyle = this.convertStyleData(style, "getSixLineOption");
         this.option.styleData = baseMethods.assiginObj(this.option.styleData, convertStyle);
         this.createChart(true);
     }

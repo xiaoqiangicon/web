@@ -12,13 +12,12 @@
                                 <div class="mask">
                                     <div class="mask-des" :title="itm.des">{{ itm.des }}</div>
 
-                                    <div class="mask-btn"><a :href="itm.href">查看详情</a></div>
+                                    <div class="mask-btn"><a :href="itm.href" target="_blank">查看详情</a></div>
                                 </div>
                             </div>
                             <div>
                                 {{ itm.title }}
                             </div>
-                            
                         </div>
                         <div v-for="itm in emptyNumber" class="swiper-list"></div>
                     </div>
@@ -135,13 +134,12 @@ export default {
     watch: {
         swiperList: {
             handler(newV, oldV) {
-                this.total = newV.reduce((pre,cur)=>{
-                    return pre+cur.length
-                },0);
+                this.total = newV.reduce((pre, cur) => {
+                    return pre + cur.length;
+                }, 0);
                 this.currentPage = 1;
-                if(newV.length===0) this.emptyNumber=8
-                else
-                this.emptyNumber = 8 - newV[newV.length-1].length;
+                if (newV.length === 0) this.emptyNumber = 8;
+                else this.emptyNumber = 8 - newV[newV.length - 1].length;
                 // this.emptyObject=[]
                 // for(let i=0;i<this.emptyNumber;i++){
                 //     this.emptyObject.push({})
@@ -165,7 +163,13 @@ export default {
             // // slidesPerColumnFill: 'row',
             // spaceBetween: 10,
             // slidesPerGroup: 8,
-            autoplay: true,
+            // autoplay: true,
+            autoplay: {
+                delay: 10000,
+                stopOnLastSlide: false, //如果设置为true，当切换到最后一个slide时停止自动切换
+                disableOnInteraction: true,
+            },
+
             on: {
                 // click(e) {
                 //     //this.clickedSlide点击的真实slide，dataset为获取slide元素的属性值
@@ -201,7 +205,11 @@ export default {
                 // slidesPerView: 4,
                 // spaceBetween: 10,
                 // slidesPerGroup: 8,
-                autoplay: true,
+                autoplay: {
+                delay: 10000,
+                stopOnLastSlide: false, //如果设置为true，当切换到最后一个slide时停止自动切换
+                disableOnInteraction: true,
+            },
                 on: {
                     // click(e) {
                     //     //this.clickedSlide点击的真实slide，dataset为获取slide元素的属性值
@@ -283,78 +291,75 @@ export default {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
-        .swiper-list{
+        .swiper-list {
             // display: flex;
             // width: 280px;
             // height: 200px;
             width: 280px;
             .sw-img {
-            width: 280px;
-            height: 160px;
-            border: 1px solid rgb(34, 62, 107);
-            margin-bottom: 15px;
-            background-size: 100% 100%;
-            background-repeat: no-repeat;
+                width: 280px;
+                height: 160px;
+                border: 1px solid rgb(34, 62, 107);
+                margin-bottom: 15px;
+                background-size: 100% 100%;
+                background-repeat: no-repeat;
 
-            &:hover {
-                .mask {
-                    padding-top: 43px;
-                    display: block;
-                    background: rgba(0, 2, 39, 0.1);
-                    .mask-des {
-                        display: -webkit-box;
-                        -webkit-box-orient: vertical; /* 表示盒子对象的子元素的排列方式 */
-                        -webkit-line-clamp: 2; /* 限制文本的行数，表示文本第多少行省略 */
-                        text-overflow: ellipsis; /*  打点展示 */
-                        overflow: hidden;
-                        width: 227px;
-                        margin: 0 auto;
-                        height: 42px;
-                        text-align: center;
-                        font-size: 14px;
-                        color: #fff;
-                    }
-                    .mask-btn {
-                        margin: 0 auto;
-                        margin-top: 16px;
-                        font-size: 10px;
-                        width: 80px;
-                        height: 24px;
-
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        border: 1px solid rgb(255, 255, 255);
-                        a {
+                &:hover {
+                    .mask {
+                        padding-top: 43px;
+                        display: block;
+                        background: rgba(0, 2, 39, 0.1);
+                        .mask-des {
+                            display: -webkit-box;
+                            -webkit-box-orient: vertical; /* 表示盒子对象的子元素的排列方式 */
+                            -webkit-line-clamp: 2; /* 限制文本的行数，表示文本第多少行省略 */
+                            text-overflow: ellipsis; /*  打点展示 */
+                            overflow: hidden;
+                            width: 227px;
+                            margin: 0 auto;
+                            height: 42px;
+                            text-align: center;
+                            font-size: 14px;
                             color: #fff;
-                            text-decoration: none;
+                        }
+                        .mask-btn {
+                            margin: 0 auto;
+                            margin-top: 16px;
+                            font-size: 10px;
+                            width: 80px;
+                            height: 24px;
+
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            border: 1px solid rgb(255, 255, 255);
+                            a {
+                                color: #fff;
+                                text-decoration: none;
+                            }
                         }
                     }
                 }
             }
-        }
-        .mask {
-            height: 100%;
+            .mask {
+                height: 100%;
 
-            display: none;
-            // display: flex;
-            // justify-content: center;
-            // align-items: center;
-            // background: rgba(0, 2, 39, 0.1);
-            // width: 100%;
-            // height: 100%;
+                display: none;
+                // display: flex;
+                // justify-content: center;
+                // align-items: center;
+                // background: rgba(0, 2, 39, 0.1);
+                // width: 100%;
+                // height: 100%;
+            }
         }
-        }
-      
-
-        
     }
     // .swiper-slide-active {
-        // border: 1px solid rgb(153, 245, 255);
-        // width: 50px!important;
-        // .mask {
-        //     background: transparent;
-        // }
+    // border: 1px solid rgb(153, 245, 255);
+    // width: 50px!important;
+    // .mask {
+    //     background: transparent;
+    // }
     // }
 }
 ::v-deep .el-pagination {

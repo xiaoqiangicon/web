@@ -12,6 +12,8 @@ let assiginObj = function(target = {}, sources = {}) {
    
     // 如果target也存在相同key 那就再次合并
     if (target.hasOwnProperty(key)) {
+      if(key==='data') obj[key]=sources[key]
+      else
       obj[key] = this.assiginObj(target[key], sources[key]);
     } else {
       // 不存在就直接添加

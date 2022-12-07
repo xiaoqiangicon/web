@@ -1,16 +1,19 @@
+import { baseLineOption } from "./option/baseLineOption";
+import {doubleLineOption} from "./option/doubleLineOption";
+import {sixLineOption} from "./option/sixLineOption"
 function getSize(size) {
     let screenWidth = document.documentElement.clientWidth;
     return (size * screenWidth) / 3840;
 }
 let commonOption = {
-    color:[
-      'rgb(255, 162, 11)',
-      'rgb(5, 222, 255)',
-      'rgb(169, 99, 255)',
-      'rgb(63, 229, 142)',
-      'rgb(49, 117, 255)',
-      'rgb(159, 159, 159)',
-  ],
+    color: [
+        "rgb(255, 162, 11)",
+        "rgb(5, 222, 255)",
+        "rgb(169, 99, 255)",
+        "rgb(63, 229, 142)",
+        "rgb(49, 117, 255)",
+        "rgb(159, 159, 159)",
+    ],
     grid: {
         top: "20%",
         left: "5%",
@@ -32,7 +35,7 @@ let commonOption = {
         },
     },
     title: {
-        show: true,
+        show: false,
         text: "图表标题",
         subtext: "图表子标题",
         textStyle: {
@@ -117,6 +120,15 @@ let axisOption = {
     ],
 };
 export default {
+    getSixLineOption() {
+        return sixLineOption;
+    },
+    getDoubleLineOption() {
+        return doubleLineOption;
+    },
+    getBaseLineOption() {
+        return baseLineOption;
+    },
     getAxisOption() {
         let seriesOption = {
             series: [
@@ -370,12 +382,12 @@ export default {
     },
     getPieOption() {
         return {
-          ...JSON.parse(JSON.stringify(commonOption)),
+            ...JSON.parse(JSON.stringify(commonOption)),
             series: [
                 {
                     startAngle: 90,
                     radius: "50%",
-                    center:['50%','50%'],
+                    center: ["50%", "50%"],
                     label: {
                         show: true, //开启显示
                         position: "outside", //在上方显示
@@ -389,12 +401,12 @@ export default {
     },
     getCirclePieOption() {
         return {
-          ...JSON.parse(JSON.stringify(commonOption)),
+            ...JSON.parse(JSON.stringify(commonOption)),
             series: [
                 {
                     startAngle: 90,
                     radius: ["50%", "70%"],
-                    center:['50%','50%'],
+                    center: ["50%", "50%"],
                     label: {
                         show: true, //开启显示
                         position: "outside", //在上方显示

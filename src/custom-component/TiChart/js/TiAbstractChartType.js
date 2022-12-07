@@ -72,6 +72,8 @@ class TiAbstractChartType {
         let finalOption = baseMethods.assiginObj(styleOption, options);
         if (JSON.stringify(this.option.config) === "{}");
         else finalOption = baseMethods.assiginObj(finalOption, this.option.config);
+        if(JSON.stringify(this.option.chartData) === "[]");
+        else finalOption = baseMethods.assiginObj(finalOption, this.convertChartData(this.option.chartData));
         this.chartObject.setOption(finalOption);
         this.initChartEvent();
         this.chartObject.resize();
@@ -103,6 +105,7 @@ class TiAbstractChartType {
      * @param {String} optionName
      */
     convertStyleData(style, optionName) {
+        if(!style) return {}
         let option = baseOption[optionName]();
         return {
             color: this.isUndefined(style.color) ? style.color.split("]") : option.color,

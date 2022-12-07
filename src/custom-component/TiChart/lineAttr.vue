@@ -138,6 +138,13 @@
                             show-alpha
                         ></el-color-picker>
                     </el-form-item>
+                    <el-form-item  label="线条颜色">
+                        <el-color-picker
+                            v-model="curComponent.propValue.itemStyleColor[item - 1]"
+                            show-alpha
+                        ></el-color-picker>
+                    </el-form-item>
+                    
                 </el-form>
             </el-tab-pane>
         </el-tabs>

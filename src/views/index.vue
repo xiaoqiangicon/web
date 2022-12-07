@@ -1,5 +1,6 @@
 <template>
     <div>
+        <!-- <TiChart style="background: #000" :category="'line'" :type="'sixLine'" :chartData="chartData"> </TiChart> -->
         <div class="trade-template">
             <div class="warpper trade-template-container">
                 <div class="head">
@@ -20,12 +21,12 @@
             </div>
             <div class="trade-template-detail">
                 <div class="trade-template-detail-l" :style="{ backgroundImage: 'url(' + detailObj.img + ')' }">
-                    <a :href="detailObj.href">查看详情</a>
+                    <a :href="detailObj.href" target="_blank">查看详情</a>
                     <img src="../assets/img/home/skip.png" />
                 </div>
                 <div class="trade-template-detail-r">
-                    <div class="trade-template-detail-title">{{ title }}</div>
-                    <div class="trade-template-detail-description">{{ description }}</div>
+                    <div class="trade-template-detail-title">{{ detailObj.title }}</div>
+                    <div class="trade-template-detail-description" :title="detailObj.description">{{ detailObj.description }}</div>
                     <swiper @changeDetail="changeDetail"></swiper>
                 </div>
             </div>
@@ -74,9 +75,14 @@
                                 {{ itm.title }}
                             </div>
                         </template>
+                        <template v-else-if="(index<=2)">
+                            <div class="contact-list-content" style="cursor: default;" v-for="itm in item.list">
+                               {{ itm.title }}
+                            </div>
+                        </template>
                         <template v-else>
                             <div class="contact-list-content" v-for="itm in item.list">
-                                <a :href="itm.href">{{ itm.title }}</a>
+                                <a :href="itm.href" target="_blank">{{ itm.title }}</a>
                             </div>
                         </template>
                     </div>
@@ -102,6 +108,17 @@ export default {
     },
     data() {
         return {
+            chartData: [
+                ["2018", "2019"],
+                [
+                    [10, 20],
+                    [20, 30],
+                    [30, 40],
+                    [40, 50],
+                    [50, 60],
+                    [60, 70],
+                ],
+            ],
             title: "智慧城市可视化",
             description: "文字描述",
             detailObj: {
@@ -116,16 +133,20 @@ export default {
     },
     created() {},
     mounted() {
+        // setTimeout(() => {
+        //     this.chartData = [["2018","2019"], [[10,10],[20,20],[30,30],[40,40],[50,50],[60,60]]];
+        // }, 2000);
         setTimeout(() => {
             this.scrollTo("trade-template");
         }, 0);
         this.$axios.get("./homeConfig.json").then((res) => {
             let data = res.data;
             this.detailObj = {
-                img: require("../assets/img/" + data.templateList[0].img),
+                img: require("../assets/img/home/" + data.templateList[0].img),
                 href: data.templateList[0].href,
+                title:data.templateList[0].title,
+                description:data.templateList[0].description
             };
-            console.log(data);
             this.title = data.title;
             this.description = data.description;
             this.contactList = data.contactList;
@@ -231,6 +252,7 @@ export default {
             align-items: center;
             justify-content: center;
             text-decoration: underline;
+            margin: 10px 50px 0 20px;
             a {
                 cursor: pointer;
                 margin-right: 10px;
@@ -248,7 +270,15 @@ export default {
                 font-weight: 700;
             }
             .trade-template-detail-description {
-                margin-bottom: 125px;
+                margin-bottom: 100px;
+                width: 500px;
+                text-indent: 2em;
+                // height: 100px;
+                display: -webkit-box;
+                        -webkit-box-orient: vertical; /* 表示盒子对象的子元素的排列方式 */
+                        -webkit-line-clamp: 4; /* 限制文本的行数，表示文本第多少行省略 */
+                        text-overflow: ellipsis; /*  打点展示 */
+                        overflow: hidden;
             }
         }
     }
@@ -317,9 +347,9 @@ export default {
     }
     .contact-list {
         display: flex;
-
+        justify-content: space-between;
         .contact-list-single {
-            margin-right: 100px;
+            // margin-right: 100px;
             .contact-list-title {
                 font-size: 16px;
                 font-weight: 700;
