@@ -77,7 +77,7 @@
                                     @dragstart="handleDragStart"
                                     :data-index="index + ',' + idx + ',' + ix"
                                 >
-                                    <div class="component-img"></div>
+                                    <div class="component-img" :style="{backgroundImage:'url('+getImg(im)+')'}"></div>
                                     {{ im.label }}
                                     <!-- <span class="iconfont" :class="'icon-' + im.icon"></span> -->
                                 </div>
@@ -129,6 +129,9 @@ export default {
         };
     },
     methods: {
+        getImg(itm){
+           return require("../assets/img/edit/"+itm.category+'-'+itm.type+'.jpg') 
+        },
         searchCom() {
             this.realInputValue=this.inputValue
 // console.log(this.deepSearch())
@@ -213,7 +216,8 @@ export default {
         }
     }
     .list {
-        overflow: hidden;
+        overflow: auto;
+        height: 760px;
         // width: 80px;
         // height: 40px;
         border: 1px solid #ddd;
@@ -238,6 +242,7 @@ export default {
         }
         .compoent-children {
             height: 0;
+            overflow: hidden;
             // display: flex;
             // flex-wrap: wrap;
             .compoent-single {
@@ -268,10 +273,11 @@ export default {
                     // }
                     .chart-single {
                         width: 48%;
-                        background: red;
+                        // background: red;
                         margin-top: 10px;
                         text-align: center;
                         .component-img {
+                            margin: 0 auto;
                             width: 80px;
                             height: 55px;
                             background-repeat: no-repeat;

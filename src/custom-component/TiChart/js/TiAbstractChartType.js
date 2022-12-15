@@ -10,7 +10,8 @@ import baseMethods from "./common";
 class TiAbstractChartType {
     constructor(option) {
         if (new.target === TiAbstractChartType) throw new Error("抽象类不能直接实例化!");
-        this.option = JSON.parse(JSON.stringify(option));
+        // this.option = JSON.parse(JSON.stringify(option));
+        this.option=option
         this.chartObject = echarts.init(option.dom);
         this.resizefunction = this.createChart.bind(this);
         addEventListener("resize", this.resizefunction);
@@ -154,7 +155,7 @@ class TiAbstractChartType {
     }
     convertAxis(style, optionName) {
         let option = baseOption[optionName]();
-        if (optionName !== "getPieOption" && optionName !== "getCirclePieOption")
+        if (!["getBasePieOption","getCirclePieOption","getRosePieOption"].includes(optionName))
             return {
                 xAxis: [
                     {

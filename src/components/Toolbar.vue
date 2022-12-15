@@ -142,12 +142,12 @@ export default {
 
             backgroundList: [
                 {
-                    label: "背景",
+                    label: "程序员的世界",
                     value: "title",
                 },
                 {
-                    label: "背景aaa",
-                    value: "1669964554709",
+                    label: "网格",
+                    value: "grid",
                 },
             ],
             isShowPreview: false,
@@ -289,7 +289,7 @@ export default {
     },
     methods: {
         import() {},
-        forward() {},
+   
         showOtherMenu() {},
         backToIndex() {
             this.$router.push("/");
@@ -357,7 +357,7 @@ export default {
         undo() {
             this.$store.commit("undo");
         },
-
+        forward() { this.$store.commit("forward"); },
         redo() {
             this.$store.commit("redo");
         },

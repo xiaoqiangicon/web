@@ -8,7 +8,7 @@
             :class="{ actived: transformIndex(index) === curComponentIndex }"
             @click="onClick(transformIndex(index))"
         >
-        <span class="real-time-component-img"></span>
+        <span class="real-time-component-img" :style="{backgroundImage:'url('+getImg(item)+')'}"></span>
             <!-- <span class="iconfont" :class="'icon-' + getComponent(index).icon"></span> -->
             <span>{{ getComponent(index).label }}</span>
             <div class="icon-container">
@@ -30,6 +30,9 @@ export default {
         'curComponentIndex',
     ]),
     methods: {
+        getImg(itm){
+           return require("../assets/img/edit/"+itm.category+'-'+itm.type+'.jpg') 
+        },
         getComponent(index) {
             return this.componentData[this.componentData.length - 1 - index]
         },

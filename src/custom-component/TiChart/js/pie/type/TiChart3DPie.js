@@ -510,7 +510,7 @@ import baseOption from "../../baseOption";
 
 
     
-    this.initChart(option, "getPieOption",isFirst);
+    this.initChart(option, "getBasePieOption",isFirst);
   }
   /**
    * @description 改变图表数据
@@ -545,7 +545,7 @@ import baseOption from "../../baseOption";
     return series
 }
   changeChartStyle(style) {
-    let convertStyle = this.convertStyleData(style, "getPieOption");
+    let convertStyle = this.convertStyleData(style, "getBasePieOption");
     this.option.styleData = baseMethods.assiginObj(this.option.styleData, convertStyle);
     this.createChart(true);
 }

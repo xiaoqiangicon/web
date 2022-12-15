@@ -1,6 +1,7 @@
 import TiAbstractChartType from "../../TiAbstractChartType";
 import baseMethods from "../../common";
-import * as echarts from 'echarts'
+import * as echarts from 'echarts';
+import baseOption from "../../baseOption";
 /**
  * Echarts 基础柱状图
  * @class TiChartBaseBar
@@ -14,7 +15,7 @@ class TiChartComplexBar extends TiAbstractChartType {
      * private
      * @description 创建Echarts
      */
-    createChart() {
+    createChart(isFirst) {
         let options = {
             tooltip: {
                 trigger: "axis",
@@ -26,7 +27,7 @@ class TiChartComplexBar extends TiAbstractChartType {
             ],
             yAxis: [
                 {
-                    name: "亿元",
+                    // name: "亿元",
                 },
             ],
             series: [
@@ -35,7 +36,7 @@ class TiChartComplexBar extends TiAbstractChartType {
                     type: "bar",
                     stack: "小蓝GDP",
                     // symbol: 'path://M214,1079l8-6h16l8,6-8,6H222Z',
-                    barWidth: baseMethods.getSize(100),
+                    // barWidth: baseMethods.getSize(100),
                     // barGap: '-100%',
                     z: 10,
                     // label: {
@@ -75,17 +76,14 @@ class TiChartComplexBar extends TiAbstractChartType {
                 {
                     stack: "小蓝GDP",
                     type: "bar",
-                    // symbol: 'path://M214,1079l8-6h16l8,6-8,6H222Z',
                     barWidth: baseMethods.getSize(100),
-                    // barGap: '-100%',
-
                     z: 10,
                     itemStyle: {
                         color: "rgba(0,255,255)",
                         borderWidth: baseMethods.getSize(2),
                         borderColor: "rgba(0,255,255)",
                     },
-                    data: [0, 0, 0, 0, 0],
+                    data: this.option.chartData[1]?new Array(this.option.chartData[1].length).fill(0):[0, 0, 0, 0, 0],
                 },
                 {
                     type: "pictorialBar",
@@ -133,7 +131,7 @@ class TiChartComplexBar extends TiAbstractChartType {
                         },
                         // }
                     },
-                    data: [1, 1, 1, 1, 1],
+                    data:this.option.chartData[1]?new Array(this.option.chartData[1].length).fill(1):[1, 1, 1, 1, 1],
                 },
                 {
                     // name: '年报上报率2',
@@ -206,98 +204,68 @@ class TiChartComplexBar extends TiAbstractChartType {
                 },
             ],
         };
-        this.initChart(options, "getAxisOption");
+        this.initChart(options, "getComplexBarOption",isFirst);
     }
     /**
      * @description 改变图表数据
      * @param {Object} config 配置
      */
     dynamicChart(data) {
-        let obj = {
-            xAxis: {
-                data: data[0],
-            },
+        // let obj = {
+        //     xAxis: {
+        //         data: data[0],
+        //     },
+        //     series: [
+        //         {
+        //             data: data[1],
+        //         },
+        //     ],
+        // };
+        // this.option.config = baseMethods.assiginObj(this.option.config, obj);
+        this.option.chartData = data;
+        this.createChart();
+    }
+    convertChartData(data) {
+        return {
+            xAxis: [
+                {
+                    data: data[0],
+                },
+            ],
             series: [
                 {
                     data: data[1],
                 },
             ],
         };
-        this.option.config = baseMethods.assiginObj(this.option.config, obj);
-        this.createChart();
+    }
+    convertSeriesData(style, optionName) {
+        let option = baseOption[optionName]();
+        let series = option.series.map((item, index) => {
+            if(index>0) return {}
+            return {
+                label: {
+                    show: this.isUndefined(style.showLabel) ? style.showLabel[index] : item.label.show,
+                    position: this.isUndefined(style.labelPosition) ? style.labelPosition[index] : item.label.position,
+                    color: this.isUndefined(style.labelColor) ? style.labelColor[index] : item.label.color,
+                    fontSize: this.isUndefined(style.labelSize) ? style.labelSize[index] : item.label.fontSize,
+                    fontWeight: this.isUndefined(style.labelWeight) ? style.labelWeight[index] : item.label.fontWeight,
+                },
+                itemStyle: {
+                    borderRadius: this.isUndefined(style.borderRadius)
+                        ? style.borderRadius[index]
+                        : item.itemStyle.borderRadius,
+                    color: this.isUndefined(style.itemStyleColor) ? style.itemStyleColor[index] : item.itemStyle.color,
+                },
+                barWidth:this.isUndefined(style.barWidth) ? style.barWidth[index] : item.barWidth,
+            };
+        });
+        return series;
     }
     changeChartStyle(style) {
-        let convertStyle = {
-            color: style.color,
-            xAxis: [
-                {
-                    boundaryGap: style.xAxisBoundaryGap,
-                    inverse: style.xAxisInverse,
-                    axisLine: {
-                        lineStyle: {
-                            color: style.xAxisColor,
-                        },
-                        show: style.showXAxis,
-                    },
-                    axisLabel: {
-                        color: style.xAxisLabelColor,
-                        fontSize: style.xAxisLabelSize,
-                        show: style.showXAxisLabel,
-                        margin: style.xAxisLabelMargin,
-                    },
-                    axisTick: {
-                        show: style.showXAxisTick,
-                    },
-                    name: style.xAxisName,
-                    nameGap: style.xAxisNameGap,
-                    nameTextStyle: {
-                        color: style.xAxisNameColor,
-                    },
-                },
-            ],
-            yAxis: [
-                {
-                    boundaryGap: style.yAxisBoundaryGap,
-                    inverse: style.yAxisInverse,
-                    axisLine: {
-                        lineStyle: {
-                            color: style.yAxisColor,
-                        },
-                        show: style.showYAxis,
-                    },
-                    axisLabel: {
-                        color: style.yAxisLabelColor,
-                        fontSize: style.yAxisLabelSize,
-                        show: style.showYAxisLabel,
-                        margin: style.yAxisLabelMargin,
-                    },
-                    axisTick: {
-                        show: style.showYAxisTick,
-                    },
-                    name: style.yAxisName,
-                    nameGap: style.yAxisNameGap,
-                    nameTextStyle: {
-                        color: style.yAxisNameColor,
-                    },
-                },
-            ],
-            series: [
-                {
-                    label: {
-                        show: style.showLabel,
-                        position: style.labelPosition,
-                        color: style.labelColor,
-                        fontSize: style.labelSize,
-                        fontWeight: style.labelWeight,
-                    },
-                    itemStyle: {
-                        borderRadius: style.borderRadius,
-                    },
-                },
-            ],
-        };
+        let convertStyle = this.convertStyleData(style, "getComplexBarOption");
         this.option.styleData = baseMethods.assiginObj(this.option.styleData, convertStyle);
-        this.createChart();
+        this.createChart(true);
     }
 }
 export default TiChartComplexBar;

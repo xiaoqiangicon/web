@@ -1,7 +1,7 @@
 <template>
     <div>
-        <!-- <TiChart style="background: #000" :category="'line'" :type="'sixLine'" :chartData="chartData"> </TiChart> -->
-        <div class="trade-template">
+        <TiChart style="background: #000;height: 500px;" :category="'bar'" :type="'rectBar'" :chartData="chartData"> </TiChart>
+        <!-- <div class="trade-template">
             <div class="warpper trade-template-container">
                 <div class="head">
                     <div class="head-logo">
@@ -93,7 +93,7 @@
                 </div>
                 <div class="copyright">Copyright © 2022-2025 江西省智能产业技术创新研究院 版权所有</div>
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
 
@@ -110,14 +110,7 @@ export default {
         return {
             chartData: [
                 ["2018", "2019"],
-                [
-                    [10, 20],
-                    [20, 30],
-                    [30, 40],
-                    [40, 50],
-                    [50, 60],
-                    [60, 70],
-                ],
+                [120, 20],
             ],
             title: "智慧城市可视化",
             description: "文字描述",
@@ -133,9 +126,9 @@ export default {
     },
     created() {},
     mounted() {
-        // setTimeout(() => {
-        //     this.chartData = [["2018","2019"], [[10,10],[20,20],[30,30],[40,40],[50,50],[60,60]]];
-        // }, 2000);
+        setTimeout(() => {
+            this.chartData = [["2018"], [190]];
+        }, 2000);
         setTimeout(() => {
             this.scrollTo("trade-template");
         }, 0);
@@ -144,8 +137,8 @@ export default {
             this.detailObj = {
                 img: require("../assets/img/home/" + data.templateList[0].img),
                 href: data.templateList[0].href,
-                title:data.templateList[0].title,
-                description:data.templateList[0].description
+                title: data.templateList[0].title,
+                description: data.templateList[0].description,
             };
             this.title = data.title;
             this.description = data.description;
@@ -275,10 +268,10 @@ export default {
                 text-indent: 2em;
                 // height: 100px;
                 display: -webkit-box;
-                        -webkit-box-orient: vertical; /* 表示盒子对象的子元素的排列方式 */
-                        -webkit-line-clamp: 4; /* 限制文本的行数，表示文本第多少行省略 */
-                        text-overflow: ellipsis; /*  打点展示 */
-                        overflow: hidden;
+                -webkit-box-orient: vertical; /* 表示盒子对象的子元素的排列方式 */
+                -webkit-line-clamp: 4; /* 限制文本的行数，表示文本第多少行省略 */
+                text-overflow: ellipsis; /*  打点展示 */
+                overflow: hidden;
             }
         }
     }

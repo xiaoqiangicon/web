@@ -30,23 +30,33 @@ import baseOption from "../../baseOption";
         }
       ]
     };
-    this.initChart(options, "getPieOption",isFirst);
+    this.initChart(options, "getBasePieOption",isFirst);
   }
   /**
    * @description 改变图表数据
    * @param {Object} config 配置
    */
   dynamicChart(data) {
-    let obj = {
-      series: [
-        {
-          data: data[0]
-        }
-      ]
-    };
-    this.option.config = baseMethods.assiginObj(this.option.config, obj);
+    // let obj = {
+    //   series: [
+    //     {
+    //       data: data[0]
+    //     }
+    //   ]
+    // };
+    // this.option.config = baseMethods.assiginObj(this.option.config, obj);
+    this.option.chartData=data
     this.createChart();
   }
+  convertChartData(data){
+    return  {
+        series: [
+            {
+                data,
+            },
+        ],
+    };
+}
   convertSeriesData(style, optionName) {
     let option = baseOption[optionName]();
     let series = [{
@@ -65,7 +75,7 @@ import baseOption from "../../baseOption";
     return series
 }
   changeChartStyle(style) {
-    let convertStyle = this.convertStyleData(style, "getPieOption");
+    let convertStyle = this.convertStyleData(style, "getBasePieOption");
     this.option.styleData = baseMethods.assiginObj(this.option.styleData, convertStyle);
     this.createChart(true);
 }

@@ -1,6 +1,17 @@
-import { baseLineOption } from "./option/baseLineOption";
-import {doubleLineOption} from "./option/doubleLineOption";
-import {sixLineOption} from "./option/sixLineOption"
+import { baseLineOption } from "./option/line/baseLineOption";
+import { doubleLineOption } from "./option/line/doubleLineOption";
+import { sixLineOption } from "./option/line/sixLineOption";
+import { basePieOption } from "./option/pie/basePieOption";
+import { circlePieOption } from "./option/pie/circlePieOption";
+import { rosePieOption } from "./option/pie/rosePieOption";
+import { baseBarOption } from "./option/bar/baseBarOption";
+import { doubleBarOption } from "./option/bar/doubleBarOption";
+import { sixBarOption } from "./option/bar/sixBarOption";
+import { bgBarOption } from "./option/bar/bgBarOption";
+import { hatBarOption } from "./option/bar/hatBarOption";
+import { lineBarOption } from "./option/bar/lineBarOption";
+import {complexBarOption} from "./option/bar/complexBarOption"
+import {rectBarOption} from "./option/bar/rectBarOption"
 function getSize(size) {
     let screenWidth = document.documentElement.clientWidth;
     return (size * screenWidth) / 3840;
@@ -120,6 +131,37 @@ let axisOption = {
     ],
 };
 export default {
+    getRectBarOption(){
+      return   rectBarOption
+    },
+    getComplexBarOption() {
+        return complexBarOption
+    },
+    getLineBarOption(){
+        return lineBarOption
+    },
+    getHatBarOption() {
+        return hatBarOption;
+    },
+    getBgBarOption() {
+        return bgBarOption;
+    },
+    getSixBarOption() {
+        return sixBarOption;
+    },
+    getDoubleBarOption() {
+        return doubleBarOption;
+    },
+    getBaseBarOption() {
+        return baseBarOption;
+    },
+
+    getRosePieOption() {
+        return rosePieOption;
+    },
+    getBasePieOption() {
+        return basePieOption;
+    },
     getSixLineOption() {
         return sixLineOption;
     },
@@ -350,33 +392,7 @@ export default {
             ],
         };
     },
-    getComplexBarOption() {
-        return {
-            ...JSON.parse(JSON.stringify(commonOption)),
-            ...JSON.parse(JSON.stringify(axisOption)),
-            series: [
-                {
-                    symbol: "emptyCircle",
-                    symbolSize: 4,
-                    showSymbol: true,
-                    smooth: false,
-                    areaStyle: {
-                        color: "#ccc",
-                    },
-                    itemStyle: {
-                        borderRadius: [getSize(10), getSize(10), getSize(10), getSize(10)],
-                    },
-                    label: {
-                        show: true, //开启显示
-                        position: "top", //在上方显示
-                        color: "#fff",
-                        fontSize: getSize(48),
-                        fontWeight: 700,
-                    },
-                },
-            ],
-        };
-    },
+    
     getShaftlessOption() {
         return {};
     },
@@ -400,51 +416,6 @@ export default {
         };
     },
     getCirclePieOption() {
-        return {
-            ...JSON.parse(JSON.stringify(commonOption)),
-            series: [
-                {
-                    startAngle: 90,
-                    radius: ["50%", "70%"],
-                    center: ["50%", "50%"],
-                    label: {
-                        show: true, //开启显示
-                        position: "outside", //在上方显示
-                        color: "inherit",
-                        fontSize: getSize(48),
-                        fontWeight: 700,
-                    },
-                },
-            ],
-        };
-    },
-    getBgBarOption() {
-        return {
-            ...JSON.parse(JSON.stringify(commonOption)),
-            ...JSON.parse(JSON.stringify(axisOption)),
-            series: [
-                {},
-                {},
-                {
-                    symbol: "emptyCircle",
-                    symbolSize: 4,
-                    showSymbol: true,
-                    smooth: false,
-                    areaStyle: {
-                        color: "#ccc",
-                    },
-                    itemStyle: {
-                        borderRadius: [getSize(10), getSize(10), getSize(10), getSize(10)],
-                    },
-                    label: {
-                        show: true, //开启显示
-                        position: "top", //在上方显示
-                        color: "#fff",
-                        fontSize: getSize(48),
-                        fontWeight: 700,
-                    },
-                },
-            ],
-        };
+        return circlePieOption;
     },
 };

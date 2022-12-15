@@ -64,12 +64,7 @@ TiChartType.LINEBAR = 'lineBar';
 */
 TiChartType.COMPLEXBAR = 'complexBar';
 
-/**
-* 三棱锥柱状图
-* @type {String}
-* @constant
-*/
-TiChartType.TRIANGLEBAR = 'triangleBar';
+
 
 /**
 * 带帽子柱状图
@@ -162,6 +157,13 @@ TiChartType.CROSSPICTORIALBAR = 'crossPictorialBar';
 * @constant
 */
 TiChartType.SIXPICTORIALBAR = 'sixPictorialBar';
+
+/**
+* 三棱锥柱状图
+* @type {String}
+* @constant
+*/
+TiChartType.TRIANGLEPICTORIALBAR = 'trianglePictorialBar';
 
 /**
 * 三角雷达图

@@ -36,7 +36,25 @@ export default {
                 store.commit('setComponentData', componentData)
             }
         },
+        forward(state){
+            if (state.snapshotIndex < state.snapshotData.length-1) {
+                state.snapshotIndex++
+                const componentData = deepCopy(state.snapshotData[state.snapshotIndex]) || getDefaultcomponentData()
+                if (state.curComponent) {
+                    // 如果当前组件不在 componentData 中，则置空
+                    const needClean = !componentData.find(component => state.curComponent.id === component.id)
 
+                    if (needClean) {
+                        store.commit('setCurComponent', {
+                            component: null,
+                            index: null,
+                        })
+                    }
+                }
+
+                store.commit('setComponentData', componentData)
+            }
+        },
         redo(state) {
             if (state.snapshotIndex < state.snapshotData.length - 1) {
                 state.snapshotIndex++

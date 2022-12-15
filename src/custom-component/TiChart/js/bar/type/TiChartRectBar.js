@@ -1,6 +1,7 @@
 import TiAbstractChartType from "../../TiAbstractChartType";
 import baseMethods from "../../common";
 import * as echarts from 'echarts'
+import baseOption from "../../baseOption";
 /**
  * Echarts 基础柱状图
  * @class TiChartBaseBar
@@ -14,12 +15,18 @@ class TiChartRectBar extends TiAbstractChartType {
      * private
      * @description 创建Echarts
      */
-    createChart() {
-        const wid = baseMethods.getSize(24);
-        const w1 = Math.sin(Math.PI / 6) * wid * 1.5; //4
-        const w2 = Math.sin(Math.PI / 3) * wid * 0.8; // 6.8
-        const snapHeight = (wid / 2) * 0.9;
-        const CubeLeft = echarts.graphic.extendShape({
+    createChart(isFirst) {
+      debugger
+      if(!isFirst)
+      console.log('1111111',baseOption['getRectBarOption']().series[0].barWidth)
+      else
+      console.log(this.option.styleData.series[0].barWidth)
+        var wid = !isFirst?baseOption['getRectBarOption']().series[0].barWidth:this.option.styleData.series[0].barWidth;
+        // const wid=30
+        var w1 = Math.sin(Math.PI / 6) * wid * 1.5; //4
+        var w2 = Math.sin(Math.PI / 3) * wid * 0.8; // 6.8
+        var snapHeight = (wid / 2) * 0.9;
+        var CubeLeft = echarts.graphic.extendShape({
           shape: {
             x: 0,
             y: 0
@@ -40,7 +47,7 @@ class TiChartRectBar extends TiAbstractChartType {
           }
         });
         // 绘制右侧面
-        const CubeRight = echarts.graphic.extendShape({
+        var CubeRight = echarts.graphic.extendShape({
           shape: {
             x: 0,
             y: 0
@@ -60,7 +67,7 @@ class TiChartRectBar extends TiAbstractChartType {
           }
         });
         // 绘制顶面
-        const CubeTop = echarts.graphic.extendShape({
+        var CubeTop = echarts.graphic.extendShape({
           shape: {
             x: 0,
             y: 0
@@ -85,20 +92,8 @@ class TiChartRectBar extends TiAbstractChartType {
         echarts.graphic.registerShape("CubeTop", CubeTop);
   
         var options = {
-          // backgroundColor:'#01224d',
-          tooltip: {
-            trigger: "axis",
-          },
-          grid: {
-            top: "15%",
-            left: "5%",
-            right: "5%",
-            bottom: "10%",
-            containLabel: true
-          },
           xAxis: [{
             data: ["2018", "2019", "2020", "2021", "2022"]
-            // data: this.inputStatus.nameArr
           }],
           yAxis: [
             {
@@ -109,12 +104,6 @@ class TiChartRectBar extends TiAbstractChartType {
             {
               type: "bar",
               label: {
-                // normal: {
-                show: true,
-                position: "top",
-                fontSize: baseMethods.getSize(26),
-                fontWeight: 700,
-                color: "rgb(6, 235, 126)",
                 offset: [-2, -5]
                 // },
               },
@@ -124,8 +113,7 @@ class TiChartRectBar extends TiAbstractChartType {
               itemStyle: {
                 color: "transparent"
               },
-              data:[225,275,365,436,377],
-            //   data: this.inputStatus.valueArr
+              data:this.option.chartData[1]?this.option.chartData[1]:[225,275,365,436,377],
             },
             {
               type: "custom",
@@ -148,7 +136,7 @@ class TiChartRectBar extends TiAbstractChartType {
                         xAxisPoint: xlocation
                       },
                       style: {
-                        fill:[225,275,365,436,377][params.dataIndex]==0?'rgba(0,0,0,0)': new echarts.graphic.LinearGradient(
+                        fill:(this.option.chartData[1]?(this.option.chartData[1][params.dataIndex]==0):([225,275,365,436,377][params.dataIndex]==0))?'rgba(0,0,0,0)': new echarts.graphic.LinearGradient(
                           0,
                           0,
                           0,
@@ -177,7 +165,7 @@ class TiChartRectBar extends TiAbstractChartType {
                         xAxisPoint: xlocation
                       },
                       style: {
-                        fill: [225,275,365,436,377][params.dataIndex]==0?'rgba(0,0,0,0)':new echarts.graphic.LinearGradient(
+                        fill: (this.option.chartData[1]?(this.option.chartData[1][params.dataIndex]==0):([225,275,365,436,377][params.dataIndex]==0))?'rgba(0,0,0,0)':new echarts.graphic.LinearGradient(
                           0,
                           0,
                           0,
@@ -206,7 +194,7 @@ class TiChartRectBar extends TiAbstractChartType {
                         xAxisPoint: xlocation
                       },
                       style: {
-                        fill: [225,275,365,436,377][params.dataIndex]==0?'rgba(0,0,0,0)':new echarts.graphic.LinearGradient(
+                        fill: (this.option.chartData[1]?(this.option.chartData[1][params.dataIndex]==0):([225,275,365,436,377][params.dataIndex]==0))?'rgba(0,0,0,0)':new echarts.graphic.LinearGradient(
                           0,
                           0,
                           0,
@@ -228,105 +216,77 @@ class TiChartRectBar extends TiAbstractChartType {
                 };
               },
               color: "rgba(27,255,168,1)",
-              data: [225,275,365,436,377]
+              data: this.option.chartData[1]?this.option.chartData[1]:[225,275,365,436,377]
             //   data: this.inputStatus.valueArr
             }
           ]
         };
-        this.initChart(options, "getAxisOption");
+        this.chartObject.dispose();
+        this.chartObject = echarts.init(this.option.dom);
+        this.initChart(options, "getRectBarOption",isFirst);
     }
     /**
      * @description 改变图表数据
      * @param {Object} config 配置
      */
     dynamicChart(data) {
-        let obj = {
-            xAxis: {
-                data: data[0],
-            },
-            series: [
-                {
-                    data: data[1],
-                },
-            ],
-        };
-        this.option.config = baseMethods.assiginObj(this.option.config, obj);
+        // let obj = {
+        //     xAxis: {
+        //         data: data[0],
+        //     },
+        //     series: [
+        //         {
+        //             data: data[1],
+        //         },
+        //     ],
+        // };
+        // this.option.config = baseMethods.assiginObj(this.option.config, obj);
+        this.option.chartData = data;
         this.createChart();
     }
-    changeChartStyle(style) {
-        let convertStyle = {
-            color: style.color,
+    convertChartData(data) {
+        return {
             xAxis: [
                 {
-                    boundaryGap: style.xAxisBoundaryGap,
-                    inverse: style.xAxisInverse,
-                    axisLine: {
-                        lineStyle: {
-                            color: style.xAxisColor,
-                        },
-                        show: style.showXAxis,
-                    },
-                    axisLabel: {
-                        color: style.xAxisLabelColor,
-                        fontSize: style.xAxisLabelSize,
-                        show: style.showXAxisLabel,
-                        margin: style.xAxisLabelMargin,
-                    },
-                    axisTick: {
-                        show: style.showXAxisTick,
-                    },
-                    name: style.xAxisName,
-                    nameGap: style.xAxisNameGap,
-                    nameTextStyle: {
-                        color: style.xAxisNameColor,
-                    },
-                },
-            ],
-            yAxis: [
-                {
-                    boundaryGap: style.yAxisBoundaryGap,
-                    inverse: style.yAxisInverse,
-                    axisLine: {
-                        lineStyle: {
-                            color: style.yAxisColor,
-                        },
-                        show: style.showYAxis,
-                    },
-                    axisLabel: {
-                        color: style.yAxisLabelColor,
-                        fontSize: style.yAxisLabelSize,
-                        show: style.showYAxisLabel,
-                        margin: style.yAxisLabelMargin,
-                    },
-                    axisTick: {
-                        show: style.showYAxisTick,
-                    },
-                    name: style.yAxisName,
-                    nameGap: style.yAxisNameGap,
-                    nameTextStyle: {
-                        color: style.yAxisNameColor,
-                    },
+                    data: data[0],
                 },
             ],
             series: [
-                {},
-                {},
                 {
-                    label: {
-                        show: style.showLabel,
-                        position: style.labelPosition,
-                        color: style.labelColor,
-                        fontSize: style.labelSize,
-                        fontWeight: style.labelWeight,
-                    },
-                    itemStyle: {
-                        borderRadius: style.borderRadius[0],
-                    },
+
                 },
+                {}
             ],
         };
+    }
+    convertSeriesData(style, optionName) {
+        let option = baseOption[optionName]();
+        let series = option.series.map((item, index) => {
+          if(index===0)
+            return {
+                label: {
+                    show: this.isUndefined(style.showLabel) ? style.showLabel[index] : item.label.show,
+                    position: this.isUndefined(style.labelPosition) ? style.labelPosition[index] : item.label.position,
+                    color: this.isUndefined(style.labelColor) ? style.labelColor[index] : item.label.color,
+                    fontSize: this.isUndefined(style.labelSize) ? style.labelSize[index] : item.label.fontSize,
+                    fontWeight: this.isUndefined(style.labelWeight) ? style.labelWeight[index] : item.label.fontWeight,
+                },
+                // itemStyle: {
+                //     borderRadius: this.isUndefined(style.borderRadius)
+                //         ? style.borderRadius[index]
+                //         : item.itemStyle.borderRadius,
+                //     color: this.isUndefined(style.itemStyleColor) ? style.itemStyleColor[index] : item.itemStyle.color,
+                // },
+                barWidth: this.isUndefined(style.barWidth) ? style.barWidth[index] : item.barWidth,
+            };
+            
+        });
+        return series;
+    }
+    changeChartStyle(style) {
+        let convertStyle = this.convertStyleData(style, "getRectBarOption");
         this.option.styleData = baseMethods.assiginObj(this.option.styleData, convertStyle);
-        this.createChart();
+        this.createChart(true);
     }
 }
 export default TiChartRectBar;

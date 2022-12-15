@@ -1,8 +1,8 @@
 import componentList from "../custom-component/component-list";
 import axios from 'axios'
-function getListMap() {
-    let map = componentList.reduce((pre, cur) => {
-        pre[cur.component] = 0;
+function getListMap(componentData) {
+    let map = componentData.reduce((pre, cur) => {
+        pre[cur.component]?'': pre[cur.component]= 1;
         return pre;
     }, {});
     return map;
@@ -35,23 +35,30 @@ function getHtml(componentData) {
     URL.revokeObjectURL(url); // 释放内存
 }
 function makeUpHtml(componentData) {
-    let map = getListMap();
-    let str = componentData.reduce((pre, cur, i) => {
-        map[cur.component]++;
+    let map = getListMap(componentData);
+    let str = componentData.reduce((pre, cur, i) => {    
         let enentStr = Object.keys(cur.events).reduce((p, c) => {
             p += `@${c}='${cur.component}-${map[cur.component]}-${c}' `;
             return p;
         }, "");
         let classStr=`class='${cur.component}-${map[cur.component]}'`
-        pre += `<${cur.component} ${classStr} ${enentStr}></${cur.component}>`;
+        pre += `<${cur.component} ${classStr} ${enentStr}`
+        if(cur.component==='TiChart'){
+            pre+=`:category='chartList[${map[cur.component]-1}].category' `
+            pre+=`:type='chartList[${map[cur.component]-1}].type' `
+            pre+=`:styleData='chartList[${map[cur.component]-1}].styleData' `
+            pre+=`:background='chartList[${map[cur.component]-1}].background' `
+        }
+        pre +=`></${cur.component}>`;
+        map[cur.component]++;
         return pre;
     }, "");
     return str;
 }
 function makeUpCss(componentData) {
-    let map = getListMap();
+    let map = getListMap(componentData);
     let str = componentData.reduce((pre, cur) => {
-        map[cur.component]++;
+       
         pre += `.${cur.component}-${map[cur.component]}{
             position:absolute;
             color:${cur.style.color};
@@ -67,6 +74,7 @@ function makeUpCss(componentData) {
             lineHeight:${cur.style.lineHeight};
             opacity:${cur.style.opacity};
         }`;
+        map[cur.component]++;
         return pre;
     }, "");
     return str;
@@ -77,6 +85,7 @@ function makeUpScript(componentData) {
         props: [],
         data () {
           return {
+            ${getChartList(componentData)}
           }
         },
         computed: {},
@@ -90,15 +99,25 @@ function makeUpScript(componentData) {
       }`;
     return str;
 }
-function getMethods(componentData) {
-    let map = getListMap();
+function getChartList(componentData){
     let str = componentData.reduce((pre, cur, i) => {
-        map[cur.component]++;
+        if(cur.component==='TiChart'){
+            pre+=`{type:'${cur.type}'}`
+        }
+        return pre;
+    }, "");
+    return str;
+}
+function getMethods(componentData) {
+    let map = getListMap(componentData);
+    let str = componentData.reduce((pre, cur, i) => {
+        
         let enentStr = Object.keys(cur.events).reduce((p, c) => {
             p += `${cur.component}-${map[cur.component]}-${c}(){}`;
             return p;
         }, "");
         pre += `${enentStr},`;
+        map[cur.component]++;
         return pre;
     }, "");
     return str;

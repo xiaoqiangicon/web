@@ -1,5 +1,6 @@
 import TiAbstractChartType from "../../TiAbstractChartType";
 import baseMethods from "../../common";
+import baseOption from "../../baseOption";
 /**
  * Echarts 基础柱状图
  * @class TiChartBaseBar
@@ -13,10 +14,23 @@ class TiChartBgBar extends TiAbstractChartType {
      * private
      * @description 创建Echarts
      */
-    createChart() {
+    createChart(isFirst) {
         let options = {
             tooltip: {
                 trigger: "axis",
+                formatter: parms=> {
+                    var str =
+                      "年份：" +
+                      parms[0].axisValue +
+                      "</br>" +
+                      parms[2].marker +
+                      
+                      parms[2].value +
+                      "%</br>"
+                    // parms[2].marker +
+                    // '企业' +"："
+                    return str;
+                  },
             },
             xAxis: [
                 {
@@ -25,167 +39,102 @@ class TiChartBgBar extends TiAbstractChartType {
             ],
             yAxis: [
                 {
-                    name: "亿元",
+                    // name: "亿元",
                 },
             ],
             series: [
                 {
-                    name: "规上企业数",
                     type: "pictorialBar",
                     symbol: "rect",
                     barWidth: baseMethods.getSize(120),
-                    // barGap:"-100%",
-                    // "z": 10,
-                    // symbolOffset:['-10%',0],
                     itemStyle: {
-                        color: "rgba(138, 193, 255,0.1)",
+                        color: "rgba(138, 193, 255,0.2)",
                     },
-                    data: [100, 100, 100],
+                    data: [0, 0, 0],
                 },
                 {
-                    name: "规上企业数",
                     type: "pictorialBar",
-                    // symbol: 'path://M214,1079l8-6h16l8,6-8,6H222Z',
                     barWidth: baseMethods.getSize(120),
-                    // barGap:"-100%",
-                    // "z": 10,
                     symbol: "rect",
-                    // symbolOffset:['-10%',0],
                     itemStyle: {
-                        color: "rgba(138, 193, 255,0.1)",
+                        color: "rgba(138, 193, 255,0.2)",
                     },
-                    data: [-100, -100, -100],
+                    data: [-0, -0, -0],
                 },
                 {
                     name: "规上企业主营业务收入(万)",
                     type: "bar",
-                    // barGap:"-100%",
-                    // symbol: 'rect',
-                    barWidth: baseMethods.getSize(70),
-                    // barWidth: "60%",
-                    // stack: "总量",
-                    // symbolOffset:['10%',0],
-                    // label: {
-                    //   show: true,
-                    //   position: 'bottom',
-                    //   // textStyle: {
-                    //     color: "rgb(255, 203, 0)",
-                    //     fontSize: baseMethods.getSize(26),
-                    //     fontWeight:700
-                    //   // },
-                    //   // formatter: function (params) {
-                    //   //   return params.value + '家'
-                    //   // },
-                    // },
-                    // itemStyle: {
-                    //   // normal: {
-                    //     color: 'rgb(255, 203, 0)'
-                    //   // },
-                    // },
-                    data: [37, 51, 63],
-                    // data:data
+                    data: this.option.chartData[1]? this.option.chartData[1]:[37, 51, 63],
                 },
             ],
         };
         this.chartObject.setOption(options);
         let maxY = this.chartObject.getModel().getComponent("yAxis").axis.scale._extent[1];
         let minY = this.chartObject.getModel().getComponent("yAxis").axis.scale._extent[0];
-        options.series[0].data = new Array(3).fill(maxY);
-        options.series[1].data = new Array(3).fill(minY);
-        this.initChart(options, "getBgBarOption");
+        options.series[0].data = new Array(this.option.chartData[1]?.length||3).fill(maxY);
+        options.series[1].data = new Array(this.option.chartData[1]?.length||3).fill(minY);
+        this.initChart(options, "getBgBarOption",isFirst);
     }
     /**
      * @description 改变图表数据
      * @param {Object} config 配置
      */
     dynamicChart(data) {
-        let obj = {
-            xAxis: {
-                data: data[0],
-            },
+        // let obj = {
+        //     xAxis: {
+        //         data: data[0],
+        //     },
+        //     series: [
+        //         {
+        //             data: data[1],
+        //         },
+        //     ],
+        // };
+        // this.option.config = baseMethods.assiginObj(this.option.config, obj);
+        this.option.chartData = data;
+        this.createChart();
+    }
+    convertChartData(data) {
+        return {
+            xAxis: [
+                {
+                    data: data[0],
+                },
+            ],
             series: [
                 {
                     data: data[1],
                 },
             ],
         };
-        this.option.config = baseMethods.assiginObj(this.option.config, obj);
-        this.createChart();
+    }
+    convertSeriesData(style, optionName) {
+        let option = baseOption[optionName]();
+        let series = option.series.map((item, index) => {
+            if(index<2) return {}
+            return {
+                label: {
+                    show: this.isUndefined(style.showLabel) ? style.showLabel[index] : item.label.show,
+                    position: this.isUndefined(style.labelPosition) ? style.labelPosition[index] : item.label.position,
+                    color: this.isUndefined(style.labelColor) ? style.labelColor[index] : item.label.color,
+                    fontSize: this.isUndefined(style.labelSize) ? style.labelSize[index] : item.label.fontSize,
+                    fontWeight: this.isUndefined(style.labelWeight) ? style.labelWeight[index] : item.label.fontWeight,
+                },
+                itemStyle: {
+                    borderRadius: this.isUndefined(style.borderRadius)
+                        ? style.borderRadius[index]
+                        : item.itemStyle.borderRadius,
+                    color: this.isUndefined(style.itemStyleColor) ? style.itemStyleColor[index] : item.itemStyle.color,
+                },
+                barWidth:this.isUndefined(style.barWidth) ? style.barWidth[index] : item.barWidth,
+            };
+        });
+        return series;
     }
     changeChartStyle(style) {
-        let convertStyle = {
-            color: style.color,
-            xAxis: [
-                {
-                    boundaryGap: style.xAxisBoundaryGap,
-                    inverse: style.xAxisInverse,
-                    axisLine: {
-                        lineStyle: {
-                            color: style.xAxisColor,
-                        },
-                        show: style.showXAxis,
-                    },
-                    axisLabel: {
-                        color: style.xAxisLabelColor,
-                        fontSize: style.xAxisLabelSize,
-                        show: style.showXAxisLabel,
-                        margin: style.xAxisLabelMargin,
-                    },
-                    axisTick: {
-                        show: style.showXAxisTick,
-                    },
-                    name: style.xAxisName,
-                    nameGap: style.xAxisNameGap,
-                    nameTextStyle: {
-                        color: style.xAxisNameColor,
-                    },
-                },
-            ],
-            yAxis: [
-                {
-                    boundaryGap: style.yAxisBoundaryGap,
-                    inverse: style.yAxisInverse,
-                    axisLine: {
-                        lineStyle: {
-                            color: style.yAxisColor,
-                        },
-                        show: style.showYAxis,
-                    },
-                    axisLabel: {
-                        color: style.yAxisLabelColor,
-                        fontSize: style.yAxisLabelSize,
-                        show: style.showYAxisLabel,
-                        margin: style.yAxisLabelMargin,
-                    },
-                    axisTick: {
-                        show: style.showYAxisTick,
-                    },
-                    name: style.yAxisName,
-                    nameGap: style.yAxisNameGap,
-                    nameTextStyle: {
-                        color: style.yAxisNameColor,
-                    },
-                },
-            ],
-            series: [
-                {},
-                {},
-                {
-                    label: {
-                        show: style.showLabel,
-                        position: style.labelPosition,
-                        color: style.labelColor,
-                        fontSize: style.labelSize,
-                        fontWeight: style.labelWeight,
-                    },
-                    itemStyle: {
-                        borderRadius: style.borderRadius[0],
-                    },
-                },
-            ],
-        };
+        let convertStyle = this.convertStyleData(style, "getBgBarOption");
         this.option.styleData = baseMethods.assiginObj(this.option.styleData, convertStyle);
-        this.createChart();
+        this.createChart(true);
     }
 }
 export default TiChartBgBar;

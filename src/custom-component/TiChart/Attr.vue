@@ -27,6 +27,7 @@
                         </el-form-item>
                     </el-form>
                     <lineAttr v-if="curComponent.category === 'line'"></lineAttr>
+                    <barAttr v-if="curComponent.category === 'bar'"></barAttr>
                 </el-collapse-item>
             </template>
             <template v-if="curComponent.category === 'pie'">
@@ -152,28 +153,16 @@
                     </el-form>
                 </el-collapse-item>
             </template>
-
-            <el-collapse-item v-if="curComponent.category === 'bar'" title="柱状图样式" name="barStyle">
-                <el-form v-if="['baseBar', 'doubleBar', 'sixBar'].includes(curComponent.type)">
-                    <el-form-item label="border边框" v-for="item in curComponent.propValue.borderRadius.length">
-                        <template v-for="itm in curComponent.propValue.borderRadius[item - 1].length">
-                            {{ positionList[itm - 1] }}
-                            <el-input
-                                v-model.number="curComponent.propValue.borderRadius[item - 1][itm - 1]"
-                                type="number"
-                                :min="0"
-                            />
-                        </template>
-                    </el-form-item>
-                </el-form>
-            </el-collapse-item>
         </el-collapse>
     </div>
 </template>
 
 <script>
 import CommonAttr from "@/custom-component/common/CommonAttr.vue";
+//折线图属性
 import lineAttr from "./lineAttr.vue";
+//柱状图属性
+import barAttr from "./barAttr.vue"
 //网格属性
 import gridAttr from "./gridAttr.vue";
 //图例属性
@@ -188,6 +177,7 @@ export default {
     components: {
         CommonAttr,
         lineAttr,
+        barAttr,
         gridAttr,
         legendAttr,
         titleAttr,
@@ -201,7 +191,7 @@ export default {
     },
     data() {
         return {
-            positionList: ["上", "右", "下", "左"],
+          
             activeName: "xStyle",
             valueActiveName: "attr0",
         };

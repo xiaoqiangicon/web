@@ -8,8 +8,8 @@
             width: changeStyleWithScale(canvasStyleData.width) + 'px',
             height: changeStyleWithScale(canvasStyleData.height) + 'px',
             backgroundImage: 'url(' + getBg(canvasStyleData.backgroundImage) + ')',
-            backgroundSize: '100% 100%',
-            backgroundRepeat: 'no-repeat',
+            backgroundSize: canvasStyleData.backgroundImage==='grid'?'':'100% 100%',
+            backgroundRepeat: canvasStyleData.backgroundImage==='grid'?'repeat':'no-repeat',
         }"
         @contextmenu="handleContextMenu"
         @mousedown="handleMouseDown"

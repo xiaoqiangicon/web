@@ -7,6 +7,7 @@ import TiChartCrossPictorialBar from "../type/TiChartCrossPictorialBar";
 import TiChartBgDoublePictorialBar from "../type/TiChartBgDoublePictorialBar";
 //六象形柱图
 import TiChartSixPictorialBar from "../type/TiChartSixPictorialBar";
+import TiChartTrianglePictorialBar from "../type/TiChartTrianglePictorialBar";
 /**
  * Echarts象形柱图类
  * @class TiChartLine
@@ -32,6 +33,8 @@ class TiChartPictorialBar extends TiAbstractChartCategory {
                 return new TiChartBgDoublePictorialBar(option);
             case TiChartType.SIXPICTORIALBAR:
                 return new TiChartSixPictorialBar(option);
+            case TiChartType.TRIANGLEPICTORIALBAR:
+                return new TiChartTrianglePictorialBar(option);
             default:
                 throw new Error("没有这种类型的Echarts图");
         }

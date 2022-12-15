@@ -5,8 +5,8 @@ import TiChartType from "../../TiChartType";
 import TiChartBaseBar from "../type/TiChartBaseBar";
 //复杂柱状图
 import TiChartComplexBar from "../type/TiChartComplexBar";
-//三棱锥柱状图
-import TiChartTriangleBar from "../type/TiChartTriangleBar";
+// //三棱锥柱状图
+// import TiChartTriangleBar from "../../pictorialBar/type/TiChartTriangleBar";
 //带帽子的柱状图
 import TiChartHatBar from "../type/TiChartHatBar";
 //双柱状图
@@ -38,8 +38,6 @@ class TiChartBar extends TiAbstractChartCategory {
                 return new TiChartBaseBar(option);
             case TiChartType.COMPLEXBAR:
                 return new TiChartComplexBar(option);
-            case TiChartType.TRIANGLEBAR:
-                return new TiChartTriangleBar(option);
             case TiChartType.HATBAR:
                 return new TiChartHatBar(option);
             case TiChartType.DOUBLEBAR:
