@@ -1,7 +1,7 @@
 <template>
     <div>
-        <TiChart style="background: #000;height: 500px;" :category="'bar'" :type="'rectBar'" :chartData="chartData"> </TiChart>
-        <!-- <div class="trade-template">
+        <!-- <TiChart style="background: #000;height: 500px;" :category="'bar'" :type="'rectBar'" :chartData="chartData"> </TiChart> -->
+        <div class="trade-template">
             <div class="warpper trade-template-container">
                 <div class="head">
                     <div class="head-logo">
@@ -93,7 +93,7 @@
                 </div>
                 <div class="copyright">Copyright © 2022-2025 江西省智能产业技术创新研究院 版权所有</div>
             </div>
-        </div> -->
+        </div>
     </div>
 </template>
 
@@ -126,9 +126,9 @@ export default {
     },
     created() {},
     mounted() {
-        setTimeout(() => {
-            this.chartData = [["2018"], [190]];
-        }, 2000);
+        // setTimeout(() => {
+        //     this.chartData = [["2018"], [190]];
+        // }, 2000);
         setTimeout(() => {
             this.scrollTo("trade-template");
         }, 0);
