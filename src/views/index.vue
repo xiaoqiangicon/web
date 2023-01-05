@@ -1,6 +1,6 @@
 <template>
     <div>
-        <!-- <TiChart style="background: #000;height: 500px;" :category="'bar'" :type="'rectBar'" :chartData="chartData"> </TiChart> -->
+        <!-- <TiChart style="background: #000;height: 500px;" :category="'pie'" :type="'tdPie'" :chartData="chartData"> </TiChart> -->
         <div class="trade-template">
             <div class="warpper trade-template-container">
                 <div class="head">
@@ -98,8 +98,8 @@
 </template>
 
 <script>
-import swiper from "./swiper.vue";
-import caseSwiper from "./caseSwiper.vue";
+import swiper from "./swiper/swiper.vue";
+import caseSwiper from "./swiper/caseSwiper.vue";
 export default {
     name: "index",
     components: {
@@ -109,8 +109,8 @@ export default {
     data() {
         return {
             chartData: [
-                ["2018", "2019"],
-                [120, 20],
+                ['2018','2019'],
+               [10,6]
             ],
             title: "智慧城市可视化",
             description: "文字描述",
@@ -126,9 +126,10 @@ export default {
     },
     created() {},
     mounted() {
-        // setTimeout(() => {
-        //     this.chartData = [["2018"], [190]];
-        // }, 2000);
+        setTimeout(() => {
+            this.chartData = [    ['2018'],
+               [3]];
+        }, 2000);
         setTimeout(() => {
             this.scrollTo("trade-template");
         }, 0);

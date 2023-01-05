@@ -151,11 +151,43 @@ class TiAbstractChartType {
             },
             ...this.convertAxis(style, optionName),
             series: this.convertSeriesData(style, optionName),
+            ...this.convertRadar(style,optionName),
         };
+    }
+    convertRadar(style, optionName){
+        let option = baseOption[optionName]();
+        if(optionName==='getTriangleRadarOption'){
+            return {
+                radar:{
+                    center:this.isUndefined(style.radarCenter)?[style.radarCenter[0]+'%',style.radarCenter[1]+'%']:option.radar.center,
+                    radius:this.isUndefined(style.radarRadius)?style.radarRadius+'%':option.radar.radius,
+                    indicator:style.radarIndicator??option.radar.indicator,
+                    splitArea:{
+                        show:style.showRadarSplitArea??option.radar.splitArea.show,
+                        areaStyle:{
+                            color:this.isUndefined(style.radarSplitAreaAreaStyleColor) ? style.radarSplitAreaAreaStyleColor.split("]") : option.radar.splitArea.areaStyle.color,
+                        }
+                    },
+                    axisLine:{
+                        lineStyle:{
+                            color:style.radarAxisLineLineStyleColor ?? option.radar.axisLine.lineStyle.color
+                        }
+                    },
+                    splitLine:{
+                        lineStyle:{
+                            type:style.radarSplitLineLineStyleType??option.radar.splitLine.lineStyle.type,
+                            color:this.isUndefined(style.radarSplitLineLineStyleColor) ? style.radarSplitLineLineStyleColor.split("]") : option.radar.splitLine.lineStyle.color,
+                            width:style.radarSplitLineLineStyleWidth??option.radar.splitLine.lineStyle.width,
+                        }
+                    }
+                }
+            }
+        }
+        else return {}
     }
     convertAxis(style, optionName) {
         let option = baseOption[optionName]();
-        if (!["getBasePieOption","getCirclePieOption","getRosePieOption"].includes(optionName))
+        if (!["getBasePieOption","getCirclePieOption","getRosePieOption",'getTriangleRadarOption'].includes(optionName))
             return {
                 xAxis: [
                     {

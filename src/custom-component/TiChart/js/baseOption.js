@@ -4,14 +4,24 @@ import { sixLineOption } from "./option/line/sixLineOption";
 import { basePieOption } from "./option/pie/basePieOption";
 import { circlePieOption } from "./option/pie/circlePieOption";
 import { rosePieOption } from "./option/pie/rosePieOption";
+import { tdPieOption } from "./option/pie/tdPieOption";
 import { baseBarOption } from "./option/bar/baseBarOption";
 import { doubleBarOption } from "./option/bar/doubleBarOption";
 import { sixBarOption } from "./option/bar/sixBarOption";
 import { bgBarOption } from "./option/bar/bgBarOption";
 import { hatBarOption } from "./option/bar/hatBarOption";
 import { lineBarOption } from "./option/bar/lineBarOption";
-import {complexBarOption} from "./option/bar/complexBarOption"
-import {rectBarOption} from "./option/bar/rectBarOption"
+import { complexBarOption } from "./option/bar/complexBarOption";
+import { rectBarOption } from "./option/bar/rectBarOption";
+import { baseScatterOption } from "./option/scatter/baseScatterOption";
+import { triangleRadarOption } from "./option/radar/triangleRadarOption";
+import { basePictorialBarOption } from "./option/pictorialBar/basePictorialBarOption";
+import { bgPictorialBarOption } from "./option/pictorialBar/bgPictorialBarOption";
+import { bgDoublePictorialBar } from "./option/pictorialBar/bgDoublePictorialBar";
+import {sixPictorialBar} from "./option/pictorialBar/sixPictorialBar"
+import {crossPictorialBar} from "./option/pictorialBar/crossPictorialBar"
+import {trianglePictorialBar} from "./option/pictorialBar/trianglePictorialBar"
+
 function getSize(size) {
     let screenWidth = document.documentElement.clientWidth;
     return (size * screenWidth) / 3840;
@@ -131,14 +141,38 @@ let axisOption = {
     ],
 };
 export default {
-    getRectBarOption(){
-      return   rectBarOption
+    getTrianglePictorialBarOption(){
+        return trianglePictorialBar
+    },
+    getCrossPictorialBarOption(){
+        return crossPictorialBar
+    },
+    getSixPictorialBarOption() {
+        return sixPictorialBar;
+    },
+    getBgDoublePictorialBarOption() {
+        return bgDoublePictorialBar;
+    },
+    getBgPictorialBarOption() {
+        return bgPictorialBarOption;
+    },
+    getBasePictorialBarOption() {
+        return basePictorialBarOption;
+    },
+    getTriangleRadarOption() {
+        return triangleRadarOption;
+    },
+    getBaseScatterOption() {
+        return baseScatterOption;
+    },
+    getRectBarOption() {
+        return rectBarOption;
     },
     getComplexBarOption() {
-        return complexBarOption
+        return complexBarOption;
     },
-    getLineBarOption(){
-        return lineBarOption
+    getLineBarOption() {
+        return lineBarOption;
     },
     getHatBarOption() {
         return hatBarOption;
@@ -155,7 +189,9 @@ export default {
     getBaseBarOption() {
         return baseBarOption;
     },
-
+    getTdPieOption(){
+        return tdPieOption
+    },
     getRosePieOption() {
         return rosePieOption;
     },
@@ -202,28 +238,28 @@ export default {
         };
         return option;
     },
-    getBgPictorialBarOption() {
-        return {
-            ...JSON.parse(JSON.stringify(commonOption)),
-            ...JSON.parse(JSON.stringify(axisOption)),
-            series: [
-                {
-                    label: {
-                        show: false,
-                    },
-                },
-                {
-                    label: {
-                        show: true, //开启显示
-                        position: "top", //在上方显示
-                        color: "#fff",
-                        fontSize: getSize(48),
-                        fontWeight: 700,
-                    },
-                },
-            ],
-        };
-    },
+    // getBgPictorialBarOption() {
+    //     return {
+    //         ...JSON.parse(JSON.stringify(commonOption)),
+    //         ...JSON.parse(JSON.stringify(axisOption)),
+    //         series: [
+    //             {
+    //                 label: {
+    //                     show: false,
+    //                 },
+    //             },
+    //             {
+    //                 label: {
+    //                     show: true, //开启显示
+    //                     position: "top", //在上方显示
+    //                     color: "#fff",
+    //                     fontSize: getSize(48),
+    //                     fontWeight: 700,
+    //                 },
+    //             },
+    //         ],
+    //     };
+    // },
     getDoubleOption() {
         return {
             ...JSON.parse(JSON.stringify(commonOption)),
@@ -392,7 +428,7 @@ export default {
             ],
         };
     },
-    
+
     getShaftlessOption() {
         return {};
     },

@@ -5,8 +5,8 @@ Vue.use(Router)
 const routes = [
     {
         path: '/edit',
-        name: 'Home',
-        component: () => import('@/views/Home'),
+        name: 'Edit',
+        component: () => import('@/views/edit'),
     },
     {
         path: '/',
@@ -16,7 +16,5 @@ const routes = [
 ]
 
 export default new Router({
-    // mode: 'history',
-    // base: process.env.BASE_URL,
     routes,
 })

@@ -82,7 +82,7 @@ export default {
             let data = res.data;
             let a = data.templateList.map((item) => {
                 return {
-                    img: require("../assets/img/home/" + item.img),
+                    img: require("../../assets/img/home/" + item.img),
                     title: item.title,
                     href: item.href,
                     description: item.description,

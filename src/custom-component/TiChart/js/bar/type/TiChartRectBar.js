@@ -16,11 +16,10 @@ class TiChartRectBar extends TiAbstractChartType {
      * @description 创建Echarts
      */
     createChart(isFirst) {
-      debugger
-      if(!isFirst)
-      console.log('1111111',baseOption['getRectBarOption']().series[0].barWidth)
-      else
-      console.log(this.option.styleData.series[0].barWidth)
+      // if(!isFirst)
+      // console.log('1111111',baseOption['getRectBarOption']().series[0].barWidth)
+      // else
+      // console.log(this.option.styleData.series[0].barWidth)
         var wid = !isFirst?baseOption['getRectBarOption']().series[0].barWidth:this.option.styleData.series[0].barWidth;
         // const wid=30
         var w1 = Math.sin(Math.PI / 6) * wid * 1.5; //4

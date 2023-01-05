@@ -1,5 +1,6 @@
 import TiAbstractChartType from "../../TiAbstractChartType";
 import baseMethods from "../../common";
+import baseOption from "../../baseOption";
 /**
  * Echarts 带有背景的象形柱图
  * @class TiChartBaseLine
@@ -13,7 +14,7 @@ class TiChartBgPictorialBar extends TiAbstractChartType {
      * private
      * @description 创建Echarts
      */
-    createChart() {
+    createChart(isFirst) {
         let options = {
             tooltip: {
                 trigger: "axis",
@@ -23,11 +24,11 @@ class TiChartBgPictorialBar extends TiAbstractChartType {
                     data: ["2018", "2019", "2020"],
                 },
             ],
-            // yAxis: [
-            //     {
-            //         // name: "亿元",
-            //     },
-            // ],
+            yAxis: [
+                {
+                    // name: "亿元",
+                },
+            ],
             series: [
                 {
                     name: '规上企业数',
@@ -53,97 +54,62 @@ class TiChartBgPictorialBar extends TiAbstractChartType {
                   },
             ],
         };
-        this.initChart(options, "getBgPictorialBarOption");
+        this.chartObject.setOption(options);
         let maxY = this.chartObject.getModel().getComponent('yAxis').axis.scale._extent[1]
-        options.series[0].data = new Array(options.series[1].data.length).fill(maxY)
-        this.initChart(options, "getBgPictorialBarOption");
+        options.series[0].data = new Array(this.option.chartData[1]?.length||options.series[1].data.length).fill(maxY)
+        this.initChart(options, "getBgPictorialBarOption",isFirst);
     }
     /**
      * @description 改变图表数据
      * @param {Object} config 配置
      */
     dynamicChart(data) {
-        let obj = {
-            xAxis: {
+         //    let obj= this.convertChartData(data)
+        // this.option.config = baseMethods.assiginObj(this.option.config, obj);
+        this.option.chartData=data
+        this.createChart();
+    }
+    convertChartData(data){
+        return  {
+            xAxis: [{
                 data: data[0],
-            },
+            }],
             series: [
+                {},
                 {
                     data: data[1],
                 },
             ],
         };
-        this.option.config = baseMethods.assiginObj(this.option.config, obj);
-        this.createChart();
+    }
+    convertSeriesData(style, optionName) {
+        let option = baseOption[optionName]();
+        let series = option.series.map((item,index) => {
+            if(index===0) return {
+                label:{
+                    show:false
+                }
+            }
+            else
+            return {
+                label: {
+                    show: this.isUndefined(style.showLabel)?style.showLabel:item.label.show,
+                    position: this.isUndefined(style.labelPosition)?style.labelPosition:item.label.position,
+                    color: this.isUndefined(style.labelColor)?style.labelColor:item.label.color,
+                    fontSize: this.isUndefined(style.labelSize)?style.labelSize:item.label.fontSize,
+                    fontWeight: this.isUndefined(style.labelWeight)?style.labelWeight:item.label.fontWeight,
+                },
+                itemStyle:{
+                    color: this.isUndefined(style.itemStyleColor)?style.itemStyleColor:item.itemStyle.color,    
+                }
+            };
+        });
+        return series
     }
     changeChartStyle(style) {
-        let convertStyle = {
-          color:style.color,
-            xAxis: [
-                {
-                    axisLine: {
-                        lineStyle: {
-                            color: style.xAxisColor,
-                        },
-                        show: style.showXAxis,
-                    },
-                    axisLabel: {
-                        color: style.xAxisLabelColor,
-                        fontSize: style.xAxisLabelSize,
-                        show: style.showXAxisLabel,
-                        margin: style.xAxisLabelMargin,
-                    },
-                    axisTick: {
-                        show: style.showXAxisTick,
-                    },
-                    name: style.xAxisName,
-                    nameGap: style.xAxisNameGap,
-                    nameTextStyle: {
-                        color: style.xAxisNameColor,
-                    },
-                },
-            ],
-            yAxis: [
-                {
-                    axisLine: {
-                        lineStyle: {
-                            color: style.yAxisColor,
-                        },
-                        show: style.showYAxis,
-                    },
-                    axisLabel: {
-                        color: style.yAxisLabelColor,
-                        fontSize: style.yAxisLabelSize,
-                        show: style.showYAxisLabel,
-                        margin: style.yAxisLabelMargin,
-                    },
-                    axisTick: {
-                        show: style.showYAxisTick,
-                    },
-                    name: style.yAxisName,
-                    nameGap: style.yAxisNameGap,
-                    nameTextStyle: {
-                        color: style.yAxisNameColor,
-                    },
-                },
-            ],
-            series:[
-                {
-
-                },
-                {
-              label:{
-                show:style.showLabel,
-                position:style.labelPosition,
-                color:style.labelColor,
-                fontSize:style.labelSize,
-                fontWeight:style.labelWeight
-              }
-            }]
-        };
+        let convertStyle = this.convertStyleData(style, "getBgPictorialBarOption");
         this.option.styleData = baseMethods.assiginObj(this.option.styleData, convertStyle);
-        
-        this.createChart();
+        this.createChart(true);
     }
 }
 export default TiChartBgPictorialBar;

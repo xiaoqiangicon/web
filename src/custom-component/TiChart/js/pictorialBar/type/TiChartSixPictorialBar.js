@@ -1,5 +1,6 @@
 import TiAbstractChartType from "../../TiAbstractChartType";
 import baseMethods from "../../common";
+import baseOption from "../../baseOption";
 /**
  * Echarts 基础折线图
  * @class TiChartBaseLine
@@ -13,7 +14,7 @@ class TiChartSixPictorialBar extends TiAbstractChartType {
      * private
      * @description 创建Echarts
      */
-    createChart() {
+    createChart(isFirst) {
         let options = {
             tooltip: {
                 trigger: "axis",
@@ -32,214 +33,88 @@ class TiChartSixPictorialBar extends TiAbstractChartType {
                 {
                     // 分隔
                     type: "pictorialBar",
-                    name:'电机电器',
-                    itemStyle: {
-                      normal: {
-                        color: "rgb(255, 162, 11)"
-                      }
-                    },
-                    symbolRepeat: "fixed",
-                    symbolMargin: 1,
-                    symbol: "rect",
-                    symbolClip: true,
-                    symbolSize: [baseMethods.getSize(10), baseMethods.getSize(12)],
-                    symbolPosition: "start",
-                    // symbolOffset: [0, 0],
-                    
-                    data: [10,20,30],
-                    z: 2,
-                    // barGap:'10%',
-                    // animationEasing: "elasticOut"
-                  },
-                  {
+                    name: "电机电器",
+
+                    data: [10, 20, 30],
+                },
+                {
                     // 分隔
-                    name:'医药医器',
+                    name: "医药医器",
                     type: "pictorialBar",
-                    itemStyle: {
-                      normal: {
-                        color: "rgb(5, 222, 255)"
-                      }
-                    },
-                    symbolRepeat: "fixed",
-                    symbolMargin: 1,
-                    symbol: "rect",
-                    symbolClip: true,
-                    symbolSize: [baseMethods.getSize(10), baseMethods.getSize(12)],
-                    symbolPosition: "start",
-                    // symbolOffset: [0, 0],
-                    data: [10,20,30],
-                    // barGap:'10%',
-                    z: 2
-                    // animationEasing: "elasticOut"
-                  },
-                  {
+
+                    data: [10, 20, 30],
+                },
+                {
                     // 分隔
-                    name:'食品饮料',
+                    name: "食品饮料",
                     type: "pictorialBar",
-                    itemStyle: {
-                      normal: {
-                        color: "rgb(169, 99, 255)"
-                      }
-                    },
-                    symbolRepeat: "fixed",
-                    symbolMargin: 1,
-                    symbol: "rect",
-                    symbolClip: true,
-                    symbolSize: [baseMethods.getSize(10), baseMethods.getSize(12)],
-                    symbolPosition: "start",
-                    // symbolOffset: [0, 0],
-                    data: [10,20,30],
-                    z: 2
-                    // animationEasing: "elasticOut"
-                  },
-                  {
+
+                    data: [10, 20, 30],
+                },
+                {
                     // 分隔
-                    name:'轻纺服装',
+                    name: "轻纺服装",
                     type: "pictorialBar",
-                    itemStyle: {
-                      normal: {
-                        color: "rgb(63, 229, 142)"
-                      }
-                    },
-                    symbolRepeat: "fixed",
-                    symbolMargin: 1,
-                    symbol: "rect",
-                    symbolClip: true,
-                    symbolSize: [baseMethods.getSize(10), baseMethods.getSize(12)],
-                    symbolPosition: "start",
-                    // symbolOffset: [0, 0],
-                    data: [10,20,30],
-                    z: 2
-                    // animationEasing: "elasticOut"
-                  },
-                  {
+
+                    data: [10, 20, 30],
+                },
+                {
                     // 分隔
-                    name:'汽车汽配',
+                    name: "汽车汽配",
                     type: "pictorialBar",
-                    itemStyle: {
-                      normal: {
-                        color: "rgb(49, 117, 255)"
-                      }
-                    },
-                    symbolRepeat: "fixed",
-                    symbolMargin: 1,
-                    symbol: "rect",
-                    symbolClip: true,
-                    symbolSize: [baseMethods.getSize(10), baseMethods.getSize(12)],
-                    symbolPosition: "start",
-                    // symbolOffset: [0, 0],
-                    data: [10,20,30],
-                    z: 2,
-                    barGap:'-60%',
+
+                    data: [10, 20, 30],
                     // animationEasing: "elasticOut"
-                  },
-                  {
+                },
+                {
                     // 分隔
-                    name:'其他产业',
+                    name: "其他产业",
                     type: "pictorialBar",
-                    itemStyle: {
-                      normal: {
-                        color: "rgb(159, 159, 159)"
-                      }
-                    },
-                    symbolRepeat: "fixed",
-                    symbolMargin: 1,
-                    symbol: "rect",
-                    symbolClip: true,
-                    symbolSize: [baseMethods.getSize(10), baseMethods.getSize(12)],
-                    symbolPosition: "start",
-                    // symbolOffset: [0, 0],
-                    data: [10,20,30],
-                    z: 2,
-                    barGap:'-60%',
-                    // animationEasing: "elasticOut"
-                  },
+                    data: [10, 20, 30],
+                },
             ],
         };
-        this.initChart(options, "getAxisOption");
+        this.initChart(options, "getSixPictorialBarOption", isFirst);
     }
     /**
      * @description 改变图表数据
      * @param {Object} config 配置
      */
     dynamicChart(data) {
-        let obj = {
-            xAxis: {
-                data: data[0],
-            },
-            series: [
-                {
-                    data: data[1],
-                },
-            ],
-        };
-        this.option.config = baseMethods.assiginObj(this.option.config, obj);
+        //    let obj= this.convertChartData(data)
+        // this.option.config = baseMethods.assiginObj(this.option.config, obj);
+        this.option.chartData = data;
         this.createChart();
     }
-    changeChartStyle(style) {
-        let convertStyle = {
-          color:style.color,
+    convertChartData(data) {
+        return {
             xAxis: [
                 {
-                    axisLine: {
-                        lineStyle: {
-                            color: style.xAxisColor,
-                        },
-                        show: style.showXAxis,
-                    },
-                    axisLabel: {
-                        color: style.xAxisLabelColor,
-                        fontSize: style.xAxisLabelSize,
-                        show: style.showXAxisLabel,
-                        margin: style.xAxisLabelMargin,
-                    },
-                    axisTick: {
-                        show: style.showXAxisTick,
-                    },
-                    name: style.xAxisName,
-                    nameGap: style.xAxisNameGap,
-                    nameTextStyle: {
-                        color: style.xAxisNameColor,
-                    },
+                    data: data[0],
                 },
             ],
-            yAxis: [
-                {
-                    axisLine: {
-                        lineStyle: {
-                            color: style.yAxisColor,
-                        },
-                        show: style.showYAxis,
-                    },
-                    axisLabel: {
-                        color: style.yAxisLabelColor,
-                        fontSize: style.yAxisLabelSize,
-                        show: style.showYAxisLabel,
-                        margin: style.yAxisLabelMargin,
-                    },
-                    axisTick: {
-                        show: style.showYAxisTick,
-                    },
-                    name: style.yAxisName,
-                    nameGap: style.yAxisNameGap,
-                    nameTextStyle: {
-                        color: style.yAxisNameColor,
-                    },
-                },
-            ],
-            series:[{
-              label:{
-                show:style.showLabel,
-                position:style.labelPosition,
-                color:style.labelColor,
-                fontSize:style.labelSize,
-                fontWeight:style.labelWeight
-              }
-            }]
+            series: data[1].map((item) => {
+                return {
+                    data: item,
+                };
+            }),
         };
+    }
+    convertSeriesData(style, optionName) {
+        let option = baseOption[optionName]();
+        let series = option.series.map((item, index) => {
+            return {
+                itemStyle: {
+                    color: this.isUndefined(style.itemStyleColor) ? style.itemStyleColor[index] : item.itemStyle.color,
+                },
+            };
+        });
+        return series;
+    }
+    changeChartStyle(style) {
+        let convertStyle = this.convertStyleData(style, "getSixPictorialBarOption");
         this.option.styleData = baseMethods.assiginObj(this.option.styleData, convertStyle);
-       
-        this.createChart();
+        this.createChart(true);
     }
 }
 export default TiChartSixPictorialBar;

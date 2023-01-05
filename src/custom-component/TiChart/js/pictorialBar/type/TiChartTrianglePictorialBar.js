@@ -1,6 +1,7 @@
 import TiAbstractChartType from "../../TiAbstractChartType";
 import baseMethods from "../../common";
 import * as echarts from "echarts";
+import baseOption from "../../baseOption";
 /**
  * Echarts 基础柱状图
  * @class TiChartBaseBar
@@ -14,7 +15,8 @@ class TiChartTriangleBar extends TiAbstractChartType {
      * private
      * @description 创建Echarts
      */
-    createChart() {
+    createChart(isFirst) {
+        let dataArr=this.option.chartData[1]?this.option.chartData[1]:[4,3,1]
         let totalRank=20
         let options = {
             tooltip: {
@@ -25,11 +27,11 @@ class TiChartTriangleBar extends TiAbstractChartType {
                     data: ["2018", "2019", "2020"],
                 },
             ],
-            yAxis: [
-                {
-                    name: "亿元",
-                },
-            ],
+            // yAxis: [
+            //     {
+            //         // name: "亿元",
+            //     },
+            // ],
             series: [
                 {
                     name: "线损率",
@@ -37,7 +39,7 @@ class TiChartTriangleBar extends TiAbstractChartType {
                     symbol: "path://M35,0L35,70L0,70z M35,0L35,70L70,70z",
                     // symbol:'path://M0,0 L35,0 L0,35z',
                     // data: [totalRank-15, totalRank-8, totalRank-5],
-                    data: [5,4,3,1].slice(1).map((item) => {
+                    data: dataArr.map((item) => {
                         return {
                             value: totalRank - item,
                             itemStyle: {
@@ -138,7 +140,7 @@ class TiChartTriangleBar extends TiAbstractChartType {
                         opacity: 1,
                         // }
                     },
-                    data: [5,4,3,1].slice(1).map((item) => {
+                    data: dataArr.map((item) => {
                         return {
                             value: 1,
                             itemStyle: {
@@ -197,7 +199,7 @@ class TiChartTriangleBar extends TiAbstractChartType {
                                 color: "rgba(61,225,255,0.6901960784313725)",
                             },
                         ]),
-                        opacity: 1,
+                        // opacity: 1,
                         // }
                     },
                     emphasis: {
@@ -225,98 +227,54 @@ class TiChartTriangleBar extends TiAbstractChartType {
                 },
             ],
         };
-        this.initChart(options, "getAxisOption");
+        this.initChart(options, "getTrianglePictorialBarOption",isFirst);
     }
     /**
      * @description 改变图表数据
      * @param {Object} config 配置
      */
     dynamicChart(data) {
-        let obj = {
-            xAxis: {
-                data: data[0],
-            },
-            series: [
-                {
-                    data: data[1],
-                },
-            ],
-        };
-        this.option.config = baseMethods.assiginObj(this.option.config, obj);
+        //    let obj= this.convertChartData(data)
+        // this.option.config = baseMethods.assiginObj(this.option.config, obj);
+        this.option.chartData=data
         this.createChart();
     }
-    changeChartStyle(style) {
-        let convertStyle = {
-            color: style.color,
-            xAxis: [
-                {
-                    boundaryGap: style.xAxisBoundaryGap,
-                    inverse: style.xAxisInverse,
-                    axisLine: {
-                        lineStyle: {
-                            color: style.xAxisColor,
-                        },
-                        show: style.showXAxis,
-                    },
-                    axisLabel: {
-                        color: style.xAxisLabelColor,
-                        fontSize: style.xAxisLabelSize,
-                        show: style.showXAxisLabel,
-                        margin: style.xAxisLabelMargin,
-                    },
-                    axisTick: {
-                        show: style.showXAxisTick,
-                    },
-                    name: style.xAxisName,
-                    nameGap: style.xAxisNameGap,
-                    nameTextStyle: {
-                        color: style.xAxisNameColor,
-                    },
-                },
-            ],
-            yAxis: [
-                {
-                    boundaryGap: style.yAxisBoundaryGap,
-                    inverse: style.yAxisInverse,
-                    axisLine: {
-                        lineStyle: {
-                            color: style.yAxisColor,
-                        },
-                        show: style.showYAxis,
-                    },
-                    axisLabel: {
-                        color: style.yAxisLabelColor,
-                        fontSize: style.yAxisLabelSize,
-                        show: style.showYAxisLabel,
-                        margin: style.yAxisLabelMargin,
-                    },
-                    axisTick: {
-                        show: style.showYAxisTick,
-                    },
-                    name: style.yAxisName,
-                    nameGap: style.yAxisNameGap,
-                    nameTextStyle: {
-                        color: style.yAxisNameColor,
-                    },
-                },
-            ],
+    convertChartData(data){
+        return  {
+            xAxis: [{
+                data: data[0],
+            }],
             series: [
                 {
-                    label: {
-                        show: style.showLabel,
-                        position: style.labelPosition,
-                        color: style.labelColor,
-                        fontSize: style.labelSize,
-                        fontWeight: style.labelWeight,
-                    },
-                    itemStyle: {
-                        borderRadius: style.borderRadius,
-                    },
+                   
                 },
+                {},
+                {}
             ],
         };
+    }
+    convertSeriesData(style, optionName) {
+        let option = baseOption[optionName]();
+        let series = option.series.map((item,index) => {
+            return {
+                // label: {
+                //     show: this.isUndefined(style.showLabel)?style.showLabel:item.label.show,
+                //     position: this.isUndefined(style.labelPosition)?style.labelPosition:item.label.position,
+                //     color: this.isUndefined(style.labelColor)?style.labelColor:item.label.color,
+                //     fontSize: this.isUndefined(style.labelSize)?style.labelSize:item.label.fontSize,
+                //     fontWeight: this.isUndefined(style.labelWeight)?style.labelWeight:item.label.fontWeight,
+                // },
+                // itemStyle:{
+                //     color: this.isUndefined(style.itemStyleColor)?style.itemStyleColor[index]:item.itemStyle.color,    
+                // }
+            };
+        });
+        return series
+    }
+    changeChartStyle(style) {
+        let convertStyle = this.convertStyleData(style, "getTrianglePictorialBarOption");
         this.option.styleData = baseMethods.assiginObj(this.option.styleData, convertStyle);
-        this.createChart();
+        this.createChart(true);
     }
 }
 export default TiChartTriangleBar;

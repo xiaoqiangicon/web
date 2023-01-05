@@ -63,49 +63,49 @@ export default {
             default: () => [
                 [
                     {
-                        img: require("../assets/img/data.png"),
+                        img: require("../../assets/img/data.png"),
                         title: "城市",
                         href: "https://www.baidu.com",
                         des: "2022年江西省智研院自主研发的产业金融服务平台11111111111111111111111111111111111",
                     },
                     {
-                        img: require("../assets/img/application.png"),
+                        img: require("../../assets/img/application.png"),
                         title: "工厂",
                         href: "https://www.bilibili.com",
                         des: "2022年江西省智研院自主研发的产业金融服务平台",
                     },
                     {
-                        img: require("../assets/img/component.png"),
+                        img: require("../../assets/img/component.png"),
                         title: "交通",
                         href: "https://www.baidu.com",
                         des: "2022年江西省智研院自主研发的产业金融服务平台",
                     },
                     {
-                        img: require("../assets/img/data.png"),
+                        img: require("../../assets/img/data.png"),
                         title: "城市",
                         href: "https://www.baidu.com",
                         des: "2022年江西省智研院自主研发的产业金融服务平台",
                     },
                     {
-                        img: require("../assets/img/application.png"),
+                        img: require("../../assets/img/application.png"),
                         title: "工厂111",
                         href: "https://www.bilibili.com",
                         des: "2022年江西省智研院自主研发的产业金融服务平台",
                     },
                     {
-                        img: require("../assets/img/component.png"),
+                        img: require("../../assets/img/component.png"),
                         title: "交通1111",
                         href: "https://www.baidu.com",
                         des: "2022年江西省智研院自主研发的产业金融服务平台",
                     },
                     {
-                        img: require("../assets/img/application.png"),
+                        img: require("../../assets/img/application.png"),
                         title: "工厂222",
                         href: "https://www.bilibili.com",
                         des: "2022年江西省智研院自主研发的产业金融服务平台",
                     },
                     {
-                        img: require("../assets/img/component.png"),
+                        img: require("../../assets/img/component.png"),
                         title: "交通2222",
                         href: "https://www.baidu.com",
                         des: "2022年江西省智研院自主研发的产业金融服务平台",
@@ -113,7 +113,7 @@ export default {
                 ],
                 [
                     {
-                        img: require("../assets/img/application.png"),
+                        img: require("../../assets/img/application.png"),
                         title: "工厂333",
                         href: "https://www.bilibili.com",
                         des: "2022年江西省智研院自主研发的产业金融服务平台",

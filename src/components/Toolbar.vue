@@ -309,7 +309,6 @@ export default {
             // this.activeSize = index;
 
             let obj = this.preSizeList.find((item) => item.title === label);
-            debugger;
             this.canvasSizeList = obj.size;
             this.canvasStyleData.width = obj.size[0][0];
             this.canvasStyleData.height = obj.size[0][1];

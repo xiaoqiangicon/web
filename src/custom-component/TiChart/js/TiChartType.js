@@ -107,7 +107,7 @@ TiChartType.CIRCLEPIE = 'circlePie';
 * @type {String}
 * @constant
 */
-TiChartType.THREEDPIE = '3DPie';
+TiChartType.THREEDPIE = 'tdPie';
 
 /**
 * 南丁格尔玫瑰饼图

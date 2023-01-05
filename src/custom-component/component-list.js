@@ -38,7 +38,7 @@ function getInitOption(category, type, optionName) {
     };
 
     let initOption;
-    if (category === "pie") {
+    if (category === "pie" || category === "radar") {
         initOption = {
             ...commonOption,
         };
@@ -101,19 +101,52 @@ function getInitOption(category, type, optionName) {
         };
     }
     if (category === "bar") {
-        if(type!=='rectBar')
-        initOption = {
-            ...initOption,
-            itemStyleColor: option.series.map((item) => item.itemStyle?.color),
-            borderRadius: option.series.map((item) => item.itemStyle?.borderRadius),
-            barWidth: option.series.map((item) => item.barWidth),
-        };
-        else{
+        if (type !== "rectBar")
+            initOption = {
+                ...initOption,
+                itemStyleColor: option.series.map((item) => item.itemStyle?.color),
+                borderRadius: option.series.map((item) => item.itemStyle?.borderRadius),
+                barWidth: option.series.map((item) => item.barWidth),
+            };
+        else {
             initOption = {
                 ...initOption,
                 barWidth: option.series.map((item) => item.barWidth),
             };
         }
+    }
+    if (category === "scatter") {
+        initOption = {
+            ...initOption,
+            symbolSize: option.series.map((item) => {
+                return item.symbolSize;
+            }),
+            itemStyleColor: option.series.map((item) => {
+                return item.itemStyle.color;
+            }),
+        };
+    }
+    if(category==='pictorialBar') {
+        if(type==='bgPictorialBar'){
+            initOption = {
+                ...initOption,
+                itemStyleColor: option.series[1].itemStyle.color
+            };
+        }
+        else if(['basePictorialBar','crossPictorialBar','sixPictorialBar'].includes(type))
+        initOption = {
+            ...initOption,
+            itemStyleColor: option.series.map((item) => {
+                return item.itemStyle.color;
+            }),
+        };
+        else if(type==='bgDoublePictorialBar')
+        initOption = {
+            ...initOption,
+            itemStyleColor: option.series.slice(1).map((item) => {
+                return item.itemStyle.color;
+            }),
+        };
     }
     let diffOption = {};
     if (category === "line" || category === "bar")
@@ -124,26 +157,63 @@ function getInitOption(category, type, optionName) {
             labelSize: option.series.map((item) => item.label?.fontSize),
             labelWeight: option.series.map((item) => item.label?.fontWeight),
         };
-    // if(category!=='pie')
-    else
+
+        if(category==='pictorialBar'){
+            if(type==='bgPictorialBar'){
+                diffOption = {
+                    showLabel: option.series[1].label.show,
+                    labelPosition: option.series[1].label.position,
+                    labelColor: option.series[1].label.color,
+                    labelSize: option.series[1].label.fontSize,
+                    labelWeight: option.series[1].label.fontWeight,
+                };
+            }
+            else if(type==='bgDoublePictorialBar'){
+                diffOption={
+                    showLabel: option.series.slice(1).map((item) => item.label?.show),
+                    labelPosition: option.series.slice(1).map((item) => item.label?.position),
+                    labelColor: option.series.slice(1).map((item) => item.label?.color),
+                    labelSize: option.series.slice(1).map((item) => item.label?.fontSize),
+                    labelWeight: option.series.slice(1).map((item) => item.label?.fontWeight),
+                }
+            }
+            else if(type==='basePictorialBar'|| type==='crossPictorialBar' || type==='trianglePictorialBar'){
+                diffOption = {
+                    showLabel: option.series[0].label.show,
+                    labelPosition: option.series[0].label.position,
+                    labelColor: option.series[0].label.color,
+                    labelSize: option.series[0].label.fontSize,
+                    labelWeight: option.series[0].label.fontWeight,
+                };
+            }
+            else diffOption={}
+        }
+    if (category === "radar") {
         diffOption = {
+            radarCenter: [Number(option.radar.center[0].split("%")[0]), Number(option.radar.center[1].split("%")[0])],
+            radarRadius: option.radar.radius.split("%")[0],
+            showRadarSplitArea: option.radar.splitArea.show,
+            radarSplitAreaAreaStyleColor: option.radar.splitArea.areaStyle.color.join("]"),
+            radarAxisLineLineStyleColor: option.radar.axisLine.lineStyle.color,
+            radarSplitLineLineStyleType: option.radar.splitLine.lineStyle.type,
+            radarSplitLineLineStyleColor: option.radar.splitLine.lineStyle.color.join("]"),
+            radarSplitLineLineStyleWidth: option.radar.splitLine.lineStyle.width,
+            radarIndicator: option.radar.indicator.map((item) => {
+                return {
+                    name: item.name,
+                    max: item.max,
+                    index: item.index,
+                };
+            }),
+        };
+    }
+    if (category === "pie") {
+        let commonPie = {
             showLabel: option.series[0].label.show,
             labelPosition: option.series[0].label.position,
             labelColor: option.series[0].label.color,
             labelSize: option.series[0].label.fontSize,
             labelWeight: option.series[0].label.fontWeight,
-        };
-    // else
-    //     diffOption = {
-    //         showLabel: option.series[2].label.show,
-    //         labelPosition: option.series[2].label.position,
-    //         labelColor: option.series[2].label.color,
-    //         labelSize: option.series[2].label.fontSize,
-    //         labelWeight: option.series[2].label.fontWeight,
-    //     };
-    if (category === "pie") {
-        let commonPie = {
-            ...diffOption,
             startAngle: option.series[0].startAngle,
             pieCenter: [
                 Number(option.series[0].center[0].split("%")[0]),
@@ -165,14 +235,7 @@ function getInitOption(category, type, optionName) {
             };
         }
     }
-    if (optionName === "getBgPictorialBarOption")
-        diffOption = {
-            showLabel: option.series[1].label.show,
-            labelPosition: option.series[1].label.position,
-            labelColor: option.series[1].label.color,
-            labelSize: option.series[1].label.fontSize,
-            labelWeight: option.series[1].label.fontWeight,
-        };
+    
     return {
         ...initOption,
         ...diffOption,
@@ -423,197 +486,6 @@ const list = [
     //                 backgroundColor: "rgba(255, 255, 255, 1)",
     //             },
     //         },
-
-    //         {
-    //             component: "TiChart",
-    //             label: "柱状图",
-    //             icon: "biaoge",
-    //             propValue: {
-    //                 ...getInitOption("bar", "", "getAxisOption"),
-    //             },
-    //             type: "baseBar",
-    //             category: "bar",
-    //             style: {
-    //                 width: 600,
-    //                 height: 200,
-    //                 fontSize: "",
-    //                 fontWeight: 400,
-    //                 textAlign: "center",
-    //                 color: "",
-    //                 backgroundColor: "rgba(0, 255, 255, 1)",
-    //             },
-    //         },
-
-    //         {
-    //             component: "TiChart",
-    //             label: "散点图",
-    //             icon: "biaoge",
-    //             propValue: {
-    //                 ...chartCommonStyle,
-    //             },
-    //             type: "baseScatter",
-    //             category: "scatter",
-    //             style: {
-    //                 width: 600,
-    //                 height: 200,
-    //                 fontSize: "",
-    //                 fontWeight: 400,
-    //                 textAlign: "center",
-    //                 color: "",
-    //                 backgroundColor: "rgba(0, 255, 255, 1)",
-    //             },
-    //         },
-    //         {
-    //             component: "TiChart",
-    //             label: "象形柱图",
-    //             icon: "biaoge",
-    //             propValue: {
-    //                 ...getInitOption("aaa", "", "getAxisOption"),
-    //             },
-    //             type: "basePictorialBar",
-    //             category: "pictorialBar",
-    //             style: {
-    //                 width: 600,
-    //                 height: 200,
-    //                 fontSize: "",
-    //                 fontWeight: 400,
-    //                 textAlign: "center",
-    //                 color: "",
-    //                 backgroundColor: "rgba(0, 255, 255, 1)",
-    //             },
-    //         },
-    //         {
-    //             component: "TiChart",
-    //             label: "象形柱图",
-    //             icon: "biaoge",
-    //             propValue: {
-    //                 ...getInitOption("aaa", "", "getBgPictorialBarOption"),
-    //             },
-    //             type: "bgPictorialBar",
-    //             category: "pictorialBar",
-    //             style: {
-    //                 width: 600,
-    //                 height: 200,
-    //                 fontSize: "",
-    //                 fontWeight: 400,
-    //                 textAlign: "center",
-    //                 color: "",
-    //                 backgroundColor: "rgba(0, 0, 0, 1)",
-    //             },
-    //         },
-    //         {
-    //             component: "TiChart",
-    //             label: "象形柱图",
-    //             icon: "biaoge",
-    //             propValue: {
-    //                 ...chartCommonStyle,
-    //             },
-    //             type: "crossPictorialBar",
-    //             category: "pictorialBar",
-    //             style: {
-    //                 width: 600,
-    //                 height: 200,
-    //                 fontSize: "",
-    //                 fontWeight: 400,
-    //                 textAlign: "center",
-    //                 color: "",
-    //                 backgroundColor: "rgba(0, 0, 0, 1)",
-    //             },
-    //         },
-    //     ],
-    // },
-    // {
-    //     title: "图表",
-    //     children: [
-    //
-    //         {
-    //             component: "TiChart",
-    //             label: "复杂柱状图",
-    //             icon: "biaoge",
-    //             propValue: {
-    //                 ...getInitOption("", "triangleBar", "getComplexBarOption"),
-    //             },
-    //             type: "triangleBar",
-    //             category: "bar",
-    //             style: {
-    //                 width: 600,
-    //                 height: 200,
-    //                 fontSize: "",
-    //                 fontWeight: 400,
-    //                 textAlign: "center",
-    //                 color: "",
-    //                 backgroundColor: "rgba(0, 0, 0, 1)",
-    //             },
-    //         },
-
-    //
-
-    //         {
-    //             component: "TiChart",
-    //             label: "饼图",
-    //             icon: "biaoge",
-    //             propValue: {
-    //                 // ...getInitOption("pie", "", "getPieOption"),
-    //                 ...chartCommonStyle,
-    //             },
-    //             type: "triangleRadar",
-    //             category: "radar",
-    //             style: {
-    //                 width: 600,
-    //                 height: 200,
-    //                 fontSize: "",
-    //                 fontWeight: 400,
-    //                 textAlign: "center",
-    //                 color: "",
-    //                 backgroundColor: "rgba(0, 255, 255, 1)",
-    //             },
-    //         },
-
-    //
-
-    //
-    //         {
-    //             component: "TiChart",
-    //             label: "条形图",
-    //             icon: "biaoge",
-    //             propValue: {
-    //                 ...getInitOption("aaa", "", "getBgPictorialBarOption"),
-    //             },
-    //             type: "bgDoublePictorialBar",
-    //             category: "pictorialBar",
-    //             style: {
-    //                 width: 600,
-    //                 height: 200,
-    //                 fontSize: "",
-    //                 fontWeight: 400,
-    //                 textAlign: "center",
-    //                 color: "",
-    //                 backgroundColor: "rgba(0, 255, 255, 1)",
-    //             },
-    //         },
-    //
-    //        
-    //         {
-    //             component: "TiChart",
-    //             label: "六象形柱图",
-    //             icon: "biaoge",
-    //             propValue: {
-    //                 ...getInitOption("pictorialBar", "sixPictorialBar", "getSixOption"),
-    //             },
-    //             type: "sixPictorialBar",
-    //             category: "pictorialBar",
-    //             style: {
-    //                 width: 600,
-    //                 height: 200,
-    //                 fontSize: "",
-    //                 fontWeight: 400,
-    //                 textAlign: "center",
-    //                 color: "",
-    //                 backgroundColor: "rgba(0, 255, 255, 1)",
-    //             },
-    //         },
-    //     ],
-    // },
     {
         title: "图表",
         children: [
@@ -682,91 +554,91 @@ const list = [
                     },
                 ],
             },
-            // {
-            //     title: "饼图",
-            //     children: [
-            //         {
-            //             component: "TiChart",
-            //             label: "饼图",
-            //             icon: "biaoge",
-            //             background: "",
-            //             propValue: {
-            //                 ...getInitOption("pie", "basePie", "getBasePieOption"),
-            //             },
-            //             type: "basePie",
-            //             category: "pie",
-            //             style: {
-            //                 width: 450,
-            //                 height: 190,
-            //                 // fontSize: "",
-            //                 // fontWeight: 400,
-            //                 // textAlign: "center",
-            //                 // color: "",
-            //                 backgroundColor: "rgba(9,15,23,1)",
-            //             },
-            //         },
-            //         {
-            //             component: "TiChart",
-            //             label: "南丁格尔饼图",
-            //             icon: "biaoge",
-            //             background: "",
-            //             propValue: {
-            //                 ...getInitOption("pie", "rosePie", "getRosePieOption"),
-            //             },
-            //             type: "rosePie",
-            //             category: "pie",
-            //             style: {
-            //                 width: 450,
-            //                 height: 190,
-            //                 // fontSize: "",
-            //                 // fontWeight: 400,
-            //                 // textAlign: "center",
-            //                 // color: "",
-            //                 backgroundColor: "rgba(9,15,23,1)",
-            //             },
-            //         },
-            //         {
-            //             component: "TiChart",
-            //             label: "环形饼图",
-            //             icon: "biaoge",
-            //             background: "",
-            //             propValue: {
-            //                 ...getInitOption("pie", "circlePie", "getCirclePieOption"),
-            //             },
-            //             type: "circlePie",
-            //             category: "pie",
-            //             style: {
-            //                 width: 450,
-            //                 height: 190,
-            //                 // fontSize: "",
-            //                 // fontWeight: 400,
-            //                 // textAlign: "center",
-            //                 // color: "",
-            //                 backgroundColor: "rgba(9,15,23,1)",
-            //             },
-            //         },
-            //         // {
-            //         //     component: "TiChart",
-            //         //     label: "饼图",
-            //         //     icon: "biaoge",
-            //         //     background: "",
-            //         //     propValue: {
-            //         //         ...getInitOption("pie", "3DPie", "getBasePieOption"),
-            //         //     },
-            //         //     type: "3DPie",
-            //         //     category: "pie",
-            //         //     style: {
-            //         //         width: 450,
-            //         //         height: 190,
-            //         //         // fontSize: "",
-            //         //         // fontWeight: 400,
-            //         //         // textAlign: "center",
-            //         //         // color: "",
-            //         //         backgroundColor: "rgba(9,15,23,1)",
-            //         //     },
-            //         // },
-            //     ],
-            // },
+            {
+                title: "饼图",
+                children: [
+                    {
+                        component: "TiChart",
+                        label: "饼图",
+                        icon: "biaoge",
+                        background: "",
+                        propValue: {
+                            ...getInitOption("pie", "basePie", "getBasePieOption"),
+                        },
+                        type: "basePie",
+                        category: "pie",
+                        style: {
+                            width: 450,
+                            height: 190,
+                            // fontSize: "",
+                            // fontWeight: 400,
+                            // textAlign: "center",
+                            // color: "",
+                            backgroundColor: "rgba(9,15,23,1)",
+                        },
+                    },
+                    {
+                        component: "TiChart",
+                        label: "南丁格尔饼图",
+                        icon: "biaoge",
+                        background: "",
+                        propValue: {
+                            ...getInitOption("pie", "rosePie", "getRosePieOption"),
+                        },
+                        type: "rosePie",
+                        category: "pie",
+                        style: {
+                            width: 450,
+                            height: 190,
+                            // fontSize: "",
+                            // fontWeight: 400,
+                            // textAlign: "center",
+                            // color: "",
+                            backgroundColor: "rgba(9,15,23,1)",
+                        },
+                    },
+                    {
+                        component: "TiChart",
+                        label: "环形饼图",
+                        icon: "biaoge",
+                        background: "",
+                        propValue: {
+                            ...getInitOption("pie", "circlePie", "getCirclePieOption"),
+                        },
+                        type: "circlePie",
+                        category: "pie",
+                        style: {
+                            width: 450,
+                            height: 190,
+                            // fontSize: "",
+                            // fontWeight: 400,
+                            // textAlign: "center",
+                            // color: "",
+                            backgroundColor: "rgba(9,15,23,1)",
+                        },
+                    },
+                    {
+                        component: "TiChart",
+                        label: "3D饼图",
+                        icon: "biaoge",
+                        background: "",
+                        propValue: {
+                            ...getInitOption("pie", "tdPie", "getTdPieOption"),
+                        },
+                        type: "tdPie",
+                        category: "pie",
+                        style: {
+                            width: 450,
+                            height: 190,
+                            // fontSize: "",
+                            // fontWeight: 400,
+                            // textAlign: "center",
+                            // color: "",
+                            backgroundColor: "rgba(9,15,23,1)",
+                        },
+                    },
+                ],
+            },
             {
                 title: "柱状图",
                 children: [
@@ -907,24 +779,199 @@ const list = [
                         },
                     },
                     {
-                                    component: "TiChart",
-                                    label: "长方体柱状图",
-                                    icon: "biaoge",
-                                    propValue: {
-                                        ...getInitOption("bar", "rectBar", "getRectBarOption"),
-                                    },
-                                    type: "rectBar",
-                                    category: "bar",
-                                    style: {
-                                        width: 450,
+                        component: "TiChart",
+                        label: "长方体柱状图",
+                        icon: "biaoge",
+                        propValue: {
+                            ...getInitOption("bar", "rectBar", "getRectBarOption"),
+                        },
+                        type: "rectBar",
+                        category: "bar",
+                        style: {
+                            width: 450,
                             height: 190,
                             // fontSize: "",
                             // fontWeight: 400,
                             // textAlign: "center",
                             // color: "",
                             backgroundColor: "rgba(9,15,23,1)",
-                                    },
-                                },
+                        },
+                    },
+                ],
+            },
+            {
+                title: "散点图",
+                children: [
+                    {
+                        component: "TiChart",
+                        background: "",
+                        label: "散点图",
+                        icon: "biaoge",
+                        propValue: {
+                            ...getInitOption("scatter", "baseScatter", "getBaseScatterOption"),
+                        },
+                        type: "baseScatter",
+                        category: "scatter",
+                        style: {
+                            width: 450,
+                            height: 190,
+                            // fontSize: "",
+                            // fontWeight: 400,
+                            // textAlign: "center",
+                            // color: "",
+                            backgroundColor: "rgba(9,15,23,1)",
+                        },
+                    },
+                ],
+            },
+            {
+                title: "雷达图",
+                children: [
+                    {
+                        component: "TiChart",
+                        background: "",
+                        label: "雷达图",
+                        icon: "biaoge",
+                        propValue: {
+                            ...getInitOption("radar", "triangleRadar", "getTriangleRadarOption"),
+                        },
+                        type: "triangleRadar",
+                        category: "radar",
+                        style: {
+                            width: 450,
+                            height: 190,
+                            // fontSize: "",
+                            // fontWeight: 400,
+                            // textAlign: "center",
+                            // color: "",
+                            backgroundColor: "rgba(9,15,23,1)",
+                        },
+                    },
+                ],
+            },
+            {
+                title: "象形柱图",
+                children: [
+                    {
+                        component: "TiChart",
+                        background: "",
+                        label: "基础象形柱图",
+                        icon: "biaoge",
+                        propValue: {
+                            ...getInitOption("pictorialBar", "basePictorialBar", "getBasePictorialBarOption"),
+                        },
+                        type: "basePictorialBar",
+                        category: "pictorialBar",
+                        style: {
+                            width: 450,
+                            height: 190,
+                            // fontSize: "",
+                            // fontWeight: 400,
+                            // textAlign: "center",
+                            // color: "",
+                            backgroundColor: "rgba(9,15,23,1)",
+                        },
+                    },
+                    {
+                        component: "TiChart",
+                        background: "",
+                        label: "带背景象形柱图",
+                        icon: "biaoge",
+                        propValue: {
+                            ...getInitOption("pictorialBar", "bgPictorialBar", "getBgPictorialBarOption"),
+                        },
+                        type: "bgPictorialBar",
+                        category: "pictorialBar",
+                        style: {
+                            width: 450,
+                            height: 190,
+                            // fontSize: "",
+                            // fontWeight: 400,
+                            // textAlign: "center",
+                            // color: "",
+                            backgroundColor: "rgba(9,15,23,1)",
+                        },
+                    },
+                    {
+                        component: "TiChart",
+                        background: "",
+                        label: "双象形柱图",
+                        icon: "biaoge",
+                        propValue: {
+                            ...getInitOption("pictorialBar", "bgDoublePictorialBar", "getBgDoublePictorialBarOption"),
+                        },
+                        type: "bgDoublePictorialBar",
+                        category: "pictorialBar",
+                        style: {
+                            width: 450,
+                            height: 190,
+                            // fontSize: "",
+                            // fontWeight: 400,
+                            // textAlign: "center",
+                            // color: "",
+                            backgroundColor: "rgba(9,15,23,1)",
+                        },
+                    },
+                    {
+                        component: "TiChart",
+                        background: "",
+                        label: "六象形柱图",
+                        icon: "biaoge",
+                        propValue: {
+                            ...getInitOption("pictorialBar", "sixPictorialBar", "getSixPictorialBarOption"),
+                        },
+                        type: "sixPictorialBar",
+                        category: "pictorialBar",
+                        style: {
+                            width: 450,
+                            height: 190,
+                            // fontSize: "",
+                            // fontWeight: 400,
+                            // textAlign: "center",
+                            // color: "",
+                            backgroundColor: "rgba(9,15,23,1)",
+                        },
+                    },
+                    {
+                        component: "TiChart",
+                        background: "",
+                        label: "横向象形柱图",
+                        icon: "biaoge",
+                        propValue: {
+                            ...getInitOption("pictorialBar", "crossPictorialBar", "getCrossPictorialBarOption"),
+                        },
+                        type: "crossPictorialBar",
+                        category: "pictorialBar",
+                        style: {
+                            width: 450,
+                            height: 190,
+                            // fontSize: "",
+                            // fontWeight: 400,
+                            // textAlign: "center",
+                            // color: "",
+                            backgroundColor: "rgba(9,15,23,1)",
+                        },
+                    },
+                    {
+                        component: "TiChart",
+                        background: "",
+                        label: "三棱锥象形柱图",
+                        icon: "biaoge",
+                        propValue: {
+                            ...getInitOption("pictorialBar", "trianglePictorialBar", "getTrianglePictorialBarOption"),
+                        },
+                        type: "trianglePictorialBar",
+                        category: "pictorialBar",
+                        style: {
+                            width: 450,
+                            height: 190,
+                            // fontSize: "",
+                            // fontWeight: 400,
+                            // textAlign: "center",
+                            // color: "",
+                            backgroundColor: "rgba(9,15,23,1)",
+                        },
+                    },
                 ],
             },
         ],
